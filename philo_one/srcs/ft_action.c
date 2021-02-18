@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 18:04:21 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 19:40:29 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/18 20:01:59 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,30 @@ void eating(t_data *one, int i)
 	printf("|philo[%i] a mange pendant %li|\n", i, time);
 }
 
-//void *check_time(void *arg)
-//{
+void *check_time(void *arg)
+{
+	int 			nb;
+	t_data 			*one;
+	int 			dead;
+	struct timeval 	temps_apres;
+	long int 		time;
 
-
-//}
+	one = *static_struct();
+	nb = 0;
+	one_is_dead = 0;
+	while (dead == 0)
+	{
+		while (nb < one->number_of_philo)
+		{
+			time = gettimeofday(&temps_apres, NULL);
+			if (one->time_to_die >= (time - one->clock_to_die[nb]))
+				return (NULL);
+			nb++;
+		}
+		nb = 0;
+		usleep(5000);
+	}
+}
 
 void *routine(void *arg)
 {
