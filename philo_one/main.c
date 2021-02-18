@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 14:47:32 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 13:02:30 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/18 16:04:12 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ int creat_thread(t_data *one)
     while (i < one->number_of_philo)
     {
         one->name[i] = i;
-        one->philo[i] = malloc(sizeof(pthread_t));
-        one->mutex[i] = malloc(sizeof(pthread_mutex_t));
-        pthread_create(one->philo[i], NULL, &routine, &one->name[i]);
-        pthread_join(*one->philo[i], (void *)&statut);
-        pthread_mutex_init(one->mutex[i], NULL);
+        pthread_create(&one->philo[i], NULL, &routine, &one->name[i]);
+        pthread_mutex_init(&one->mutex[i], NULL);
         i++;
     }
-    return (1);
+	i = 0;
+	while (i < one->number_of_philo)
+	{
+		pthread_join(one->philo[i], (void *)&statut);
+		i++;
+	}
+	return (1);
 }
 
 int main(int argc, char **argv)

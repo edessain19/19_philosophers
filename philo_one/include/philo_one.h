@@ -5,6 +5,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <string.h>
+# include <sys/time.h>
 
 typedef struct      s_philo_one
 {
@@ -13,9 +15,10 @@ typedef struct      s_philo_one
     int             time_to_eat;
     int             time_to_sleep;
     int             number_of_time;
-    pthread_t       **philo;
-    pthread_mutex_t **mutex;
+    pthread_t       *philo;
+    pthread_mutex_t *mutex;
     int             *name;
+	int 			statut;
 }                   t_data;
 
 int     main();
@@ -41,6 +44,12 @@ void    init_struct(t_data *one);
 ** ft_action.c
 */
 void    *routine(void *arg);
+void 	eating(t_data *one, int i);
+void 	sleeping(t_data *one, int i);
+void 	thinking(t_data *one, int i);
+
+
+
 
 
 #endif

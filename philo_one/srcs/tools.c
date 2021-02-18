@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:14:32 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 11:34:13 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/18 16:31:31 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void    init_struct(t_data *one)
     one->time_to_eat = 0;
     one->time_to_sleep = 0;
     one->number_of_time = 0; //facultatif
+	one->statut = 0;
 }
