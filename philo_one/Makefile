@@ -1,6 +1,6 @@
 NAME = philo_one
 SRCS = main.c \
-		srcs/ft_error.c \
+		srcs/ft_fill_the_struct.c \
 		srcs/tools.c \
 		srcs/ft_action.c
 

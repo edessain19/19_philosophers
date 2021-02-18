@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 14:47:32 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 16:04:12 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/18 19:35:12 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int creat_thread(t_data *one)
 {
     int         i;
     int         *statut;
+//	pthread_t	time_to_die;
 
     i = 0;
     statut = NULL;

@@ -15,9 +15,11 @@ typedef struct      s_philo_one
     int             time_to_eat;
     int             time_to_sleep;
     int             number_of_time;
+//	int 			*iter;
     pthread_t       *philo;
     pthread_mutex_t *mutex;
     int             *name;
+	int 			*clock_to_die;
 	int 			statut;
 }                   t_data;
 
@@ -25,11 +27,12 @@ int     main();
 void    init_struct(t_data *one);
 
 /*
-** Ft_error.c
+** ft_fill_the_struct.c
 */
 
 int     check_digit(int argc, char **argv);
 int     fill_struct(t_data *one, int argc, char **argv);
+void    init_struct(t_data *one);
 
 /*
 ** tools.c
@@ -38,7 +41,6 @@ int     fill_struct(t_data *one, int argc, char **argv);
 t_data   **static_struct(void);
 int	    ft_isdigit(int c);
 int     ft_atoi(const char *str);
-void    init_struct(t_data *one);
 
 /*
 ** ft_action.c
