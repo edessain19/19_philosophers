@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 18:04:21 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 20:01:59 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/18 20:05:14 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void eating(t_data *one, int i)
 	struct timeval temps_apres;
 	long int time;
 
-	gettimeofday(&temps_avant, NULL);
+	one->clock_to_die[i] = gettimeofday(&temps_avant, NULL);
 	usleep(one->time_to_eat);
 	gettimeofday(&temps_apres, NULL);
 	time = ((((temps_apres.tv_sec - temps_avant.tv_sec) * 1000000 + temps_apres.tv_usec) - temps_avant.tv_usec));
