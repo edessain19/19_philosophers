@@ -1,0 +1,24 @@
+NAME = philo_one
+SRCS = main.c \
+		srcs/ft_error.c \
+		srcs/tools.c \
+		srcs/ft_action.c
+
+OBJS = $(SRCS:.c=.o)
+
+INCLUDE = include/philo.h
+CC = gcc -Wall -Werror -Wextra
+RM = rm -f
+
+all:		${NAME}
+
+$(NAME):	$(OBJS)
+			$(CC) -I./ $(OBJS) -o $@
+
+clean:
+			$(RM) $(OBJS)
+
+fclean:		clean
+			$(RM) $(NAME)
+
+re:			fclean all
