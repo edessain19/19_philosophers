@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 18:04:21 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 20:05:14 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/19 13:02:24 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,41 @@ void eating(t_data *one, int i)
 	struct timeval temps_apres;
 	long int time;
 
-	one->clock_to_die[i] = gettimeofday(&temps_avant, NULL);
+	gettimeofday(&temps_avant, NULL);
+	one->last_eat[i] = ((temps_avant.tv_sec) * 1000000 + temps_avant.tv_usec);
 	usleep(one->time_to_eat);
 	gettimeofday(&temps_apres, NULL);
 	time = ((((temps_apres.tv_sec - temps_avant.tv_sec) * 1000000 + temps_apres.tv_usec) - temps_avant.tv_usec));
-	printf("|philo[%i] a mange pendant %li|\n", i, time);
+	printf("|philo[%i] a mange pendant %li ms|\n", i, time);
 }
 
 void *check_time(void *arg)
 {
 	int 			nb;
 	t_data 			*one;
-	int 			dead;
-	struct timeval 	temps_apres;
+	struct timeval 	temps_mtn;
 	long int 		time;
 
 	one = *static_struct();
 	nb = 0;
-	one_is_dead = 0;
-	while (dead == 0)
+	arg = 0;
+	while (one->statut == -1)
 	{
 		while (nb < one->number_of_philo)
 		{
-			time = gettimeofday(&temps_apres, NULL);
-			if (one->time_to_die >= (time - one->clock_to_die[nb]))
+			time = (temps_mtn.tv_sec * 1000000 + temps_mtn.tv_usec) - one->last_eat[nb];
+			if (one->time_to_die < (time - one->last_eat[nb]))
+			{
+				one->statut = nb;
+				printf("|philo [%i] is dead!!|\n", one->statut);
 				return (NULL);
+			}
 			nb++;
 		}
 		nb = 0;
 		usleep(5000);
 	}
+	return (NULL);
 }
 
 void *routine(void *arg)
@@ -74,22 +79,21 @@ void *routine(void *arg)
     int         	i;
     int         	fork_next;
     t_data       	*one;
-//	struct timeval 	temps_avant;
-//	struct timeval 	temps_apres;
-//	long int 		time;
+	struct timeval 	temps_avant;
 
 	one = *static_struct();
     i = *(int *)arg;
     fork_next = (i + 1) % one->number_of_philo;
 //	while (one->statut == 0 && (one->iter[i] < 0 || one->number_of_time == -1))
-//	while (1)
-//	{
+	one->last_eat[i] = ((temps_avant.tv_sec) * 1000000 + temps_avant.tv_usec);
+	while (one->statut == -1)
+	{
 		pthread_mutex_lock(&one->mutex[i]);
 		pthread_mutex_lock(&one->mutex[fork_next]);
 		eating(one, i);
 		pthread_mutex_unlock(&one->mutex[i]);
 		pthread_mutex_unlock(&one->mutex[fork_next]);
 		sleeping(one, i);
-//	}
+	}
 	return (NULL);
 }

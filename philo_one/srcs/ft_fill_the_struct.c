@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:29:15 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 19:36:47 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:54:33 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int     fill_struct(t_data *one, int argc, char **argv)
 	one->philo = malloc(sizeof(pthread_t) * one->number_of_philo);
 	one->mutex = malloc(sizeof(pthread_mutex_t) * one->number_of_philo);
 	one->name = malloc(sizeof(int) * one->number_of_philo);
-	one->clock_to_die = malloc(sizeof(int) * one->number_of_philo);
+	one->last_eat = malloc(sizeof(int) * one->number_of_philo);
 //	one->iter = malloc(sizeof(int) * one->number_of_philo);
 	memset(one->philo, 0, one->number_of_philo * 8);
 	memset(one->mutex, 0, one->number_of_philo * 8);
-	memset(one->clock_to_die, 0, one->number_of_philo * 8);
+	memset(one->last_eat, 0, one->number_of_philo * 8);
 //	memset(one->iter, 5, one->number_of_philo * 8);
     return (0);
 }
@@ -66,5 +66,5 @@ void    init_struct(t_data *one)
     one->time_to_eat = 0;
     one->time_to_sleep = 0;
     one->number_of_time = 0; //facultatif
-	one->statut = 0;
+	one->statut = -1;
 }

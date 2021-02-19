@@ -19,7 +19,7 @@ typedef struct      s_philo_one
     pthread_t       *philo;
     pthread_mutex_t *mutex;
     int             *name;
-	int 			*clock_to_die;
+	long int 		*last_eat;
 	int 			statut;
 }                   t_data;
 
@@ -46,6 +46,7 @@ int     ft_atoi(const char *str);
 ** ft_action.c
 */
 void    *routine(void *arg);
+void 	*check_time(void *arg);
 void 	eating(t_data *one, int i);
 void 	sleeping(t_data *one, int i);
 void 	thinking(t_data *one, int i);

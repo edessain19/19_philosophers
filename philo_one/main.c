@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 14:47:32 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/18 19:35:12 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:55:48 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int creat_thread(t_data *one)
 {
     int         i;
     int         *statut;
-//	pthread_t	time_to_die;
+	pthread_t	check_dead;
 
     i = 0;
     statut = NULL;
@@ -27,12 +27,14 @@ int creat_thread(t_data *one)
         pthread_mutex_init(&one->mutex[i], NULL);
         i++;
     }
+	pthread_create(&check_dead, NULL, &check_time, &one->last_eat);
 	i = 0;
 	while (i < one->number_of_philo)
 	{
 		pthread_join(one->philo[i], (void *)&statut);
 		i++;
 	}
+	pthread_join(check_dead, (void *)&statut);
 	return (1);
 }
 
