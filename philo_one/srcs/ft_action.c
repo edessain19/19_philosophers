@@ -20,36 +20,33 @@
 
 void sleeping(t_data *one, int i)
 {
-	struct timeval temps_avant;
-	struct timeval temps_apres;
-	long int time;
+	long int time_before;
+	long int time_after;
+	i = 0;
 
-	gettimeofday(&temps_avant, NULL);
-	usleep(one->time_to_sleep);
-	gettimeofday(&temps_apres, NULL);
-	time = ((((temps_apres.tv_sec - temps_avant.tv_sec) * 1000000 + temps_apres.tv_usec) - temps_avant.tv_usec));
-	printf("|philo[%i] a dormi pendant %li|\n", i, time);
+	time_before = get_time();
+	usleep(one->time_to_sleep * 1000);
+	time_after = get_time();
+//	printf("|philo[%i] a dormi pendant %li ms|\n", i, time_after - time_before);
 }
 
 void eating(t_data *one, int i)
 {
-	struct timeval temps_avant;
-	struct timeval temps_apres;
-	long int time;
+	long int time_before;
+	long int time_after;
 
-	gettimeofday(&temps_avant, NULL);
-	one->last_eat[i] = ((temps_avant.tv_sec) * 1000000 + temps_avant.tv_usec);
-	usleep(one->time_to_eat);
-	gettimeofday(&temps_apres, NULL);
-	time = ((((temps_apres.tv_sec - temps_avant.tv_sec) * 1000000 + temps_apres.tv_usec) - temps_avant.tv_usec));
-	printf("|philo[%i] a mange pendant %li ms|\n", i, time);
+	time_before = get_time();
+	one->last_eat[i] = time_before;
+	usleep(one->time_to_eat * 1000);
+	time_after = get_time();
+//	printf("|philo[%i] a mange pendant %li ms|\n", i, time_after - time_before);
+//	printf("time before eat of philo[%i] = %li\n", i, time_before);
 }
 
 void *check_time(void *arg)
 {
 	int 			nb;
 	t_data 			*one;
-	struct timeval 	temps_mtn;
 	long int 		time;
 
 	one = *static_struct();
@@ -59,17 +56,17 @@ void *check_time(void *arg)
 	{
 		while (nb < one->number_of_philo)
 		{
-			time = (temps_mtn.tv_sec * 1000000 + temps_mtn.tv_usec) - one->last_eat[nb];
-			if (one->time_to_die < (time - one->last_eat[nb]))
+			time = get_time();
+			if (one->time_to_die < time - one->last_eat[nb])
 			{
 				one->statut = nb;
-				printf("|philo [%i] is dead!!|\n", one->statut);
+				printf("%li %i died\n", get_time() - one->time_start, one->statut + 1);
 				return (NULL);
 			}
 			nb++;
 		}
 		nb = 0;
-		usleep(5000);
+		usleep(200 * 1000);
 	}
 	return (NULL);
 }
@@ -77,22 +74,36 @@ void *check_time(void *arg)
 void *routine(void *arg)
 {
     int         	i;
+	int 			nb;
     int         	fork_next;
     t_data       	*one;
-	struct timeval 	temps_avant;
 
 	one = *static_struct();
-    i = *(int *)arg;
-    fork_next = (i + 1) % one->number_of_philo;
-//	while (one->statut == 0 && (one->iter[i] < 0 || one->number_of_time == -1))
-	one->last_eat[i] = ((temps_avant.tv_sec) * 1000000 + temps_avant.tv_usec);
+	i = *(int *)arg;
+	if (i % 2 == 0)
+	{
+    	nb = i;
+		fork_next = (i + 1) % one->number_of_philo;
+	}
+	else
+	{
+		nb = (i + 1) % one->number_of_philo;
+		fork_next = i;
+	}
+	one->last_eat[i] = get_time();
 	while (one->statut == -1)
 	{
-		pthread_mutex_lock(&one->mutex[i]);
+		pthread_mutex_lock(&one->mutex[nb]);
+		if (one->statut == -1)
+			printf("%li %i has taken a fork\n", get_time() - one->time_start, i + 1);
 		pthread_mutex_lock(&one->mutex[fork_next]);
+		if (one->statut == -1)
+			printf("%li %i is eating\n", get_time() - one->time_start, i + 1);
 		eating(one, i);
-		pthread_mutex_unlock(&one->mutex[i]);
+		pthread_mutex_unlock(&one->mutex[nb]);
 		pthread_mutex_unlock(&one->mutex[fork_next]);
+		if (one->statut == -1)
+			printf("%li %i is sleeping\n", get_time() - one->time_start, i + 1);
 		sleeping(one, i);
 	}
 	return (NULL);

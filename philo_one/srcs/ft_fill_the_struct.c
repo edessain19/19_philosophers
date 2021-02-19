@@ -67,4 +67,5 @@ void    init_struct(t_data *one)
     one->time_to_sleep = 0;
     one->number_of_time = 0; //facultatif
 	one->statut = -1;
+    one->time_start = get_time();
 }

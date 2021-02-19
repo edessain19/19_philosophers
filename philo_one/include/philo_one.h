@@ -19,8 +19,9 @@ typedef struct      s_philo_one
     pthread_t       *philo;
     pthread_mutex_t *mutex;
     int             *name;
-	long int 		*last_eat;
+	long    		*last_eat;
 	int 			statut;
+    long int        time_start;
 }                   t_data;
 
 int     main();
@@ -38,6 +39,7 @@ void    init_struct(t_data *one);
 ** tools.c
 */
 
+long    get_time(void);
 t_data   **static_struct(void);
 int	    ft_isdigit(int c);
 int     ft_atoi(const char *str);
