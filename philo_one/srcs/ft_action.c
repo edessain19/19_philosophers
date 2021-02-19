@@ -12,11 +12,6 @@
 
 #include "../include/philo_one.h"
 
-//void thinking(t_data *one, int i)
-//{
-
-
-//}
 
 void sleeping(t_data *one, int i)
 {
@@ -27,20 +22,15 @@ void sleeping(t_data *one, int i)
 	time_before = get_time();
 	usleep(one->time_to_sleep * 1000);
 	time_after = get_time();
-//	printf("|philo[%i] a dormi pendant %li ms|\n", i, time_after - time_before);
 }
 
 void eating(t_data *one, int i)
 {
-	long int time_before;
-	long int time_after;
+	long int time;
 
-	time_before = get_time();
-	one->last_eat[i] = time_before;
+	time = get_time();
+	one->last_eat[i] = time;
 	usleep(one->time_to_eat * 1000);
-	time_after = get_time();
-//	printf("|philo[%i] a mange pendant %li ms|\n", i, time_after - time_before);
-//	printf("time before eat of philo[%i] = %li\n", i, time_before);
 }
 
 void *check_time(void *arg)
@@ -56,6 +46,7 @@ void *check_time(void *arg)
 	{
 		while (nb < one->number_of_philo)
 		{
+			usleep(1 * 1000);
 			time = get_time();
 			if (one->time_to_die < time - one->last_eat[nb])
 			{
@@ -66,7 +57,7 @@ void *check_time(void *arg)
 			nb++;
 		}
 		nb = 0;
-		usleep(200 * 1000);
+		usleep(4 * 1000);
 	}
 	return (NULL);
 }
@@ -93,6 +84,8 @@ void *routine(void *arg)
 	one->last_eat[i] = get_time();
 	while (one->statut == -1)
 	{
+		if (one->statut == -1)
+			printf("%li %i is thinking\n", get_time() - one->time_start, i + 1);
 		pthread_mutex_lock(&one->mutex[nb]);
 		if (one->statut == -1)
 			printf("%li %i has taken a fork\n", get_time() - one->time_start, i + 1);
@@ -104,7 +97,8 @@ void *routine(void *arg)
 		pthread_mutex_unlock(&one->mutex[fork_next]);
 		if (one->statut == -1)
 			printf("%li %i is sleeping\n", get_time() - one->time_start, i + 1);
-		sleeping(one, i);
+		//sleeping(one, i);
+		usleep(one->time_to_sleep * 1000);
 	}
 	return (NULL);
 }
