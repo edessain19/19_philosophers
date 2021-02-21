@@ -12,6 +12,34 @@
 
 #include "../include/philo_one.h"
 
+void    lock_mutex(t_data *one, int philo)
+{
+    int i;
+
+    i = 0;
+    while (i < one->number_of_philo)
+    {
+        if (i != philo)
+        {
+            pthread_mutex_unlock(&one->mutex[i]);
+            pthread_mutex_lock(&one->mutex[i]); 
+        }
+        i++;
+    }
+}
+
+void    destroy_mutex(t_data *one)
+{
+    int i;
+
+    i = 0;
+    while (i < one->number_of_philo)
+    {
+        pthread_mutex_unlock(&one->mutex[i]); 
+        pthread_mutex_destroy(&one->mutex[i]);
+    }
+}
+
 long    get_time(void)
 {
     struct timeval  tp;

@@ -34,7 +34,7 @@ int creat_thread(t_data *one)
 		pthread_join(one->philo[i], (void *)&statut);
 		i++;
 	}
-	//pthread_join(check_dead, (void *)&statut);
+	destroy_mutex(one);
 	return (1);
 }
 

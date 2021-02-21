@@ -15,7 +15,6 @@ typedef struct      s_philo_one
     int             time_to_eat;
     int             time_to_sleep;
     int             number_of_time;
-//	int 			*iter;
     pthread_t       *philo;
     pthread_mutex_t *mutex;
     int             *name;
@@ -39,6 +38,8 @@ void    init_struct(t_data *one);
 ** tools.c
 */
 
+void    lock_mutex(t_data *one, int philo);
+void    destroy_mutex(t_data *one);
 long    get_time(void);
 t_data   **static_struct(void);
 int	    ft_isdigit(int c);

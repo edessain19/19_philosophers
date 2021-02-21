@@ -18,7 +18,6 @@ void eating(t_data *one, int i)
 
 	time = get_time() - one->time_start;
 	one->last_eat[i] = time;
-//	printf("philo[%i] a mamge à %li ms\n", i, time);
 	usleep(one->time_to_eat * 1000);
 }
 
@@ -40,12 +39,15 @@ void *check_time(void *arg)
 			{
 				one->statut = nb;
 				printf("%li %i died\n", time, one->statut + 1);
+				// lock_mutex(one, nb);
+				// printf("time = %li\nlast_eat = %li\n",time, one->last_eat[nb]);
+				// printf("diff = %li\n", time - one->last_eat[nb]);
 				return (NULL);
 			}
 			nb++;
 		}
 		nb = 0;
-		usleep(4 * 1000);
+		usleep(5 * 1000);
 	}
 	return (NULL);
 }
@@ -53,38 +55,30 @@ void *check_time(void *arg)
 void *routine(void *arg)
 {
     int         	i;
-	int 			nb;
-    int         	fork_next;
+	int 			fork_right;
+    int         	fork_left;
     t_data       	*one;
 
 	one = *static_struct();
-	i = *(int *)arg;
-	
-	if (i % 2 == 0)
-	{
-    	nb = i;
-		fork_next = (i + 1) % one->number_of_philo;
-	}
-	 else
- 	{
- 		nb = (i + 1) % one->number_of_philo;
- 	 	fork_next = i;
- 	 }
+	i = *(int *)arg;	
+	fork_left = i;
+	fork_right = (i + 1) % one->number_of_philo;
+	if (i == 0)
+		usleep(10);
 	one->last_eat[i] = get_time() - one->time_start;
-	printf("philo[%i] a mamge à %li ms\n", i, one->last_eat[i]);
 	while (one->statut == -1)
 	{
 		if (one->statut == -1)
 			printf("%li %i is thinking\n", get_time() - one->time_start, i + 1);
-		pthread_mutex_lock(&one->mutex[nb]);
+		pthread_mutex_lock(&one->mutex[fork_left]);
 		if (one->statut == -1)
 			printf("%li %i has taken a fork\n", get_time() - one->time_start, i + 1);
-		pthread_mutex_lock(&one->mutex[fork_next]);
+		pthread_mutex_lock(&one->mutex[fork_right]);
 		if (one->statut == -1)
-			printf("%li %i is eating\n", get_time() - one->time_start, i + 1);
+			printf("=======>%li %i is eating\n", get_time() - one->time_start, i + 1);
 		eating(one, i);
-		pthread_mutex_unlock(&one->mutex[nb]);
-		pthread_mutex_unlock(&one->mutex[fork_next]);
+		pthread_mutex_unlock(&one->mutex[fork_left]);
+		pthread_mutex_unlock(&one->mutex[fork_right]);
 		if (one->statut == -1)
 			printf("%li %i is sleeping\n", get_time() - one->time_start, i + 1);
 		usleep(one->time_to_sleep * 1000);
