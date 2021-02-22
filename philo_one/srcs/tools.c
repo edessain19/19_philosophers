@@ -12,6 +12,40 @@
 
 #include "../include/philo_one.h"
 
+void    ft_sleep(int time)
+{
+    int i;
+    long int time_now;
+
+    time_now = get_time();
+    i = 0;
+    while (i < 10 * time)
+    {
+        i++;
+        if (get_time() - time_now >= time)
+            break;
+        usleep(100);
+    }
+}
+
+void    ft_print_str(long int time, int philo, char *message)
+{
+    char    *dest;
+    char    *time_philo;
+    char    *nb_philo;
+
+    time_philo = ft_itoa((int)time);
+    nb_philo = ft_itoa(philo);
+    dest = ft_strjoin(time_philo, " ");
+    dest = ft_strjoin(dest, nb_philo);
+    dest = ft_strjoin(dest, " ");
+    dest = ft_strjoin(dest, message);
+    write(1, dest, ft_strlen(dest));
+    free(dest);
+    free(time_philo);
+    free(nb_philo);
+}
+
 void    lock_mutex(t_data *one, int philo)
 {
     int i;
@@ -55,37 +89,4 @@ t_data   **static_struct(void)
 {
     static t_data    *one;
     return (&one);
-}
-
-int		ft_isdigit(int c)
-{
-	if (c < '0' || '9' < c)
-		return (0);
-	return (1);
-}
-
-int    ft_atoi(const char *str)
-{
-    int                    i;
-    int                    signe;
-    unsigned long long    prev;
-    unsigned long long    digit;
-
-    i = 0;
-    prev = 0;
-    digit = 0;
-    signe = 1;
-    while (str[i] == ' ' || str[i] == '\n' || str[i] == '\r' || str[i] == '\t'
-        || str[i] == '\v' || str[i] == '\f')
-        i++;
-    if (str[i] == '-' || str[i] == '+')
-        signe = (str[i++] == '-') ? -1 : 1;
-    while (str[i] > 47 && str[i] < 58)
-    {
-        digit = digit * 10 + (str[i++] - '0');
-        if (digit < prev || digit >= 9223372036854775807)
-            return ((signe == -1) ? 0 : -1);
-        prev = digit;
-    }
-    return (digit * signe);
 }

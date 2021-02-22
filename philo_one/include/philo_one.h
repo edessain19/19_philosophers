@@ -44,6 +44,9 @@ long    get_time(void);
 t_data   **static_struct(void);
 int	    ft_isdigit(int c);
 int     ft_atoi(const char *str);
+void    ft_print_str(long int time, int philo, char *message);
+void    ft_sleep(int time);
+
 
 /*
 ** ft_action.c
@@ -53,6 +56,21 @@ void 	*check_time(void *arg);
 void 	eating(t_data *one, int i);
 void 	sleeping(t_data *one, int i);
 void 	thinking(t_data *one, int i);
+
+/*
+** ft_libft.c
+*/
+
+char	        *ft_strjoin(char const *s1, char const *s2);
+char	        *ft_strjoin_free_all(char *s1, char *s2);
+char	        *ft_strdup(const char *s1);
+int             ft_atoi(const char *str);
+char			*ft_itoa(int n);
+int		        ft_isdigit(int c);
+size_t		    ft_strlen(const char *s);
+
+
+
 
 
 
