@@ -62,7 +62,7 @@ void *routine(void *arg)
 	i = *(int *)arg;	
 	fork_left = i;
 	fork_right = (i + 1) % one->number_of_philo;
-	if (i  == one->number_of_philo - 1)
+	if (i % 2 == 0)
 	{	
 		fork_left = (i + 1) % one->number_of_philo;
 		fork_right = i;
