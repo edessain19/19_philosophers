@@ -38,13 +38,15 @@ void    init_struct(t_data *one);
 ** tools.c
 */
 
-void    lock_mutex(t_data *one, int philo);
+void    lock_mutex(t_data *one);
+void    unlock_mutex(t_data *one);
 void    destroy_mutex(t_data *one);
 long    get_time(void);
 t_data   **static_struct(void);
 int	    ft_isdigit(int c);
 int     ft_atoi(const char *str);
 void    ft_print_str(long int time, int philo, char *message);
+void    ft_print_dead(long int time, int philo);
 void    ft_sleep(int time);
 
 
@@ -63,6 +65,7 @@ void 	thinking(t_data *one, int i);
 
 char	        *ft_strjoin(char const *s1, char const *s2);
 char	        *ft_strjoin_free_all(char *s1, char *s2);
+char	        *ft_strjoin_free(char *s1, char *s2);
 char	        *ft_strdup(const char *s1);
 int             ft_atoi(const char *str);
 char			*ft_itoa(int n);

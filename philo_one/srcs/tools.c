@@ -28,36 +28,26 @@ void    ft_sleep(int time)
     }
 }
 
-void    ft_print_str(long int time, int philo, char *message)
-{
-    char    *dest;
-    char    *time_philo;
-    char    *nb_philo;
-
-    time_philo = ft_itoa((int)time);
-    nb_philo = ft_itoa(philo);
-    dest = ft_strjoin(time_philo, " ");
-    dest = ft_strjoin(dest, nb_philo);
-    dest = ft_strjoin(dest, " ");
-    dest = ft_strjoin(dest, message);
-    write(1, dest, ft_strlen(dest));
-    free(dest);
-    free(time_philo);
-    free(nb_philo);
-}
-
-void    lock_mutex(t_data *one, int philo)
+void    lock_mutex(t_data *one)
 {
     int i;
 
     i = 0;
     while (i < one->number_of_philo)
     {
-        if (i != philo)
-        {
-            pthread_mutex_unlock(&one->mutex[i]);
-            pthread_mutex_lock(&one->mutex[i]); 
-        }
+        pthread_mutex_lock(&one->mutex[i]); 
+        i++;
+    }
+}
+
+void    unlock_mutex(t_data *one)
+{
+    int i;
+
+    i = 0;
+    while (i < one->number_of_philo)
+    {
+        pthread_mutex_unlock(&one->mutex[i]); 
         i++;
     }
 }

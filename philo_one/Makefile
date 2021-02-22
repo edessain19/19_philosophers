@@ -5,6 +5,7 @@ SRCS = main.c \
 		srcs/ft_action.c \
 		srcs/ft_libft.c \
 		srcs/ft_itoa.c \
+		srcs/ft_print.c
 
 OBJS = $(SRCS:.c=.o)
 
