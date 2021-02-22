@@ -38,7 +38,7 @@ void *check_time(void *arg)
 			if (one->time_to_die < time - one->last_eat[nb])
 			{
 				one->statut = nb;
-				ft_print_dead(time, one->statut + 1);
+				ft_print_dead(one, time, one->statut + 1);
 				unlock_mutex(one);
 				return (NULL);
 			}
@@ -56,7 +56,6 @@ void *routine(void *arg)
 	int 			fork_right;
     int         	fork_left;
     t_data       	*one;
-	int 		iter = 0;
 
 	one = *static_struct();
 	i = *(int *)arg;	
@@ -70,21 +69,20 @@ void *routine(void *arg)
 	one->last_eat[i] = get_time() - one->time_start;
 	while (one->statut == -1)
 	{
-		 if (one->statut == -1)
-			ft_print_str(get_time() - one->time_start, i + 1, "is thinking\n");
+		//  if (one->statut == -1)
+			ft_print_str(one, get_time() - one->time_start, i + 1, ft_strdup("is thinking\n"));
 		pthread_mutex_lock(&one->mutex[fork_left]);	
-		 if (one->statut == -1)
-			ft_print_str(get_time() - one->time_start, i + 1, "has taken a fork\n");
+		//  if (one->statut == -1)
+			ft_print_fork(one, get_time() - one->time_start, i + 1);
 		pthread_mutex_lock(&one->mutex[fork_right]);
-		 if (one->statut == -1)
-			ft_print_str(get_time() - one->time_start, i + 1, "is eating\n");
+		//  if (one->statut == -1)
+			ft_print_str(one, get_time() - one->time_start, i + 1, ft_strdup("is eating\n"));
 		eating(one, i);
 		pthread_mutex_unlock(&one->mutex[fork_left]);
 		pthread_mutex_unlock(&one->mutex[fork_right]);
-		 if (one->statut == -1)
-			ft_print_str(get_time() - one->time_start, i + 1, "is sleeping\n");
+		// if (one->statut == -1)
+			ft_print_str(one, get_time() - one->time_start, i + 1, ft_strdup("is sleeping\n"));
 		ft_sleep(one->time_to_sleep);
-		printf("philo = %i, tour = %i\n", i + 1, iter++);
 	}
 	return (NULL);
 }

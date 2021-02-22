@@ -17,6 +17,7 @@ typedef struct      s_philo_one
     int             number_of_time;
     pthread_t       *philo;
     pthread_mutex_t *mutex;
+    pthread_mutex_t global;
     int             *name;
 	long    		*last_eat;
 	int 			statut;
@@ -45,8 +46,10 @@ long    get_time(void);
 t_data   **static_struct(void);
 int	    ft_isdigit(int c);
 int     ft_atoi(const char *str);
-void    ft_print_str(long int time, int philo, char *message);
-void    ft_print_dead(long int time, int philo);
+void    ft_print_str(t_data *one, long int time, int philo, char *message);
+void    ft_print_dead(t_data *one, long int time, int philo);
+void    ft_print_fork(t_data *one, long int time, int philo);
+
 void    ft_sleep(int time);
 
 

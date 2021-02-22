@@ -12,37 +12,63 @@
 
 #include "../include/philo_one.h"
 
-void    ft_print_str(long int time, int philo, char *message)
+void    ft_print_str(t_data *one, long int time, int philo, char *message)
 {
     char    *dest;
     char    *time_philo;
     char    *nb_philo;
 
+    pthread_mutex_lock(&one->global);	
     time_philo = ft_itoa((int)time);
     nb_philo = ft_itoa(philo);
     dest = ft_strjoin(time_philo, " ");
     dest = ft_strjoin_free(dest, nb_philo);
     dest = ft_strjoin_free(dest, " ");
-    dest = ft_strjoin_free(dest, message);
+    dest = ft_strjoin_free_all(dest, message);
     write(1, dest, ft_strlen(dest));
+    pthread_mutex_unlock(&one->global);
     free(dest);
     free(time_philo);
     free(nb_philo);
 }
 
-void    ft_print_dead(long int time, int philo)
+void    ft_print_fork(t_data *one, long int time, int philo)
 {
     char    *dest;
     char    *time_philo;
     char    *nb_philo;
+    char    *msg;
 
+    pthread_mutex_lock(&one->global);	
+    msg = ft_strdup("has taken a fork\n");
     time_philo = ft_itoa((int)time);
     nb_philo = ft_itoa(philo);
     dest = ft_strjoin(time_philo, " ");
     dest = ft_strjoin_free(dest, nb_philo);
     dest = ft_strjoin_free(dest, " ");
-    dest = ft_strjoin_free(dest, "died\n");
-    usleep(100);
+    dest = ft_strjoin_free_all(dest, msg);
+    write(1, dest, ft_strlen(dest));
+    pthread_mutex_unlock(&one->global);
+    free(dest);
+    free(time_philo);
+    free(nb_philo);
+}
+
+void    ft_print_dead(t_data *one, long int time, int philo)
+{
+    char    *dest;
+    char    *time_philo;
+    char    *nb_philo;
+    char    *msg;
+
+    msg = ft_strdup("died\n");
+    pthread_mutex_lock(&one->global);	
+    time_philo = ft_itoa((int)time);
+    nb_philo = ft_itoa(philo);
+    dest = ft_strjoin(time_philo, " ");
+    dest = ft_strjoin_free(dest, nb_philo);
+    dest = ft_strjoin_free(dest, " ");
+    dest = ft_strjoin_free_all(dest, msg);
     write(1, dest, ft_strlen(dest));
     free(dest);
     free(time_philo);

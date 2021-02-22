@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+////faire fct exit ! destroy tout les mutex et free tout///
+
 # include "./include/philo_one.h"
 
 int creat_thread(t_data *one)
@@ -20,6 +22,7 @@ int creat_thread(t_data *one)
 
     i = 0;
     statut = NULL;
+    pthread_mutex_init(&one->global, NULL);
     while (i < one->number_of_philo)
     {
         one->name[i] = i;
