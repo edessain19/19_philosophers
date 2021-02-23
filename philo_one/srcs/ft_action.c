@@ -18,7 +18,24 @@ void	eating(t_data *one, int i)
 
 	time = get_time(one);
 	one->last_eat[i] = time;
-	ft_sleep(one, one->time_to_eat);
+	if (one->statut == -1)
+	{
+		ft_print_str(get_time(one), i + 1, ft_strdup(" is eating\n"));
+		ft_sleep(one, one->time_to_eat);
+	}
+}
+
+void	sleeping(t_data *one, int i)
+{
+	long int	time;
+
+	time = get_time(one);
+	if (one->statut == -1)
+	{
+		ft_print_str(get_time(one), i + 1, ft_strdup(" is sleeping\n"));
+		ft_sleep(one, one->time_to_sleep);
+	}
+
 }
 
 void	*check_time(void *arg)
@@ -68,16 +85,16 @@ void	*routine(void *arg)
 	one->last_eat[i] = get_time(one);
 	while (one->statut == -1)
 	{
-		ft_print_think(get_time(one), i + 1);
+		if (one->statut == -1)
+			ft_print_think(get_time(one), i + 1);
 		pthread_mutex_lock(&one->mutex[fork_left]);
-		ft_print_fork(get_time(one), i + 1);
+		if (one->statut == -1)
+			ft_print_fork(get_time(one), i + 1);
 		pthread_mutex_lock(&one->mutex[fork_right]);
-		ft_print_str(get_time(one), i + 1, ft_strdup(" is eating\n"));
 		eating(one, i);
 		pthread_mutex_unlock(&one->mutex[fork_left]);
 		pthread_mutex_unlock(&one->mutex[fork_right]);
-		ft_print_str(get_time(one), i + 1, ft_strdup(" is sleeping\n"));
-		ft_sleep(one, one->time_to_sleep);
+		sleeping(one, i);
 	}
 	return (NULL);
 }

@@ -61,12 +61,15 @@ void    destroy_mutex(t_data *one)
     {
         pthread_mutex_unlock(&one->mutex[i]); 
         pthread_mutex_destroy(&one->mutex[i]);
+        pthread_detach(one->philo[i]);
         i++;
     }
     pthread_mutex_unlock(&one->global);
     pthread_mutex_destroy(&one->global);
     pthread_mutex_unlock(&one->dead);
     pthread_mutex_destroy(&one->dead);
+    pthread_detach(one->check_dead);
+    ft_free(one);
 }
 
 long    get_time(t_data *one)
