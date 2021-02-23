@@ -23,6 +23,8 @@ int creat_thread(t_data *one)
     i = 0;
     statut = NULL;
     pthread_mutex_init(&one->global, NULL);
+    pthread_mutex_init(&one->dead, NULL);
+    pthread_mutex_lock(&one->dead);
     while (i < one->number_of_philo)
     {
         one->name[i] = i;
@@ -31,14 +33,8 @@ int creat_thread(t_data *one)
         i++;
     }
 	pthread_create(&check_dead, NULL, &check_time, &one->last_eat);
-  
-	i = 0;
-	while (i < one->number_of_philo)
-	{
-		pthread_join(one->philo[i], (void *)&statut);
-		i++;
-	}
-    // destroy_mutex(one);
+    pthread_mutex_lock(&one->dead);
+    destroy_mutex(one);
 	return (1);
 }
 

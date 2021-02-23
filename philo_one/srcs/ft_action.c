@@ -32,6 +32,7 @@ void *check_time(void *arg)
 	arg = 0;
 	while (one->statut == -1)
 	{
+		usleep(400);
 		while (nb < one->number_of_philo)
 		{
 			time = get_time() - one->time_start;
@@ -40,12 +41,13 @@ void *check_time(void *arg)
 				one->statut = nb;
 				ft_print_dead(one, time, one->statut + 1);
 				unlock_mutex(one);
+				pthread_mutex_unlock(&one->dead);
 				return (NULL);
 			}
 			nb++;
 		}
 		nb = 0;
-		usleep(4 * 1000);
+		usleep(3600);
 	}
 	return (NULL);
 }

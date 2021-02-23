@@ -18,6 +18,7 @@ typedef struct      s_philo_one
     pthread_t       *philo;
     pthread_mutex_t *mutex;
     pthread_mutex_t global;
+    pthread_mutex_t dead;
     int             *name;
 	long    		*last_eat;
 	int 			statut;
