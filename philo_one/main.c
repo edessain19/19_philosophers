@@ -10,15 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-////faire fct exit ! destroy tout les mutex et free tout///
-
 # include "./include/philo_one.h"
 
 int creat_thread(t_data *one)
 {
     int         i;
     int         *statut;
-	pthread_t	check_dead;
 
     i = 0;
     statut = NULL;
@@ -27,14 +24,21 @@ int creat_thread(t_data *one)
     pthread_mutex_lock(&one->dead);
     while (i < one->number_of_philo)
     {
-        one->name[i] = i;
-        pthread_create(&one->philo[i], NULL, &routine, &one->name[i]);
         pthread_mutex_init(&one->mutex[i], NULL);
+        one->name[i] = i;
+        one->last_eat[i] = 0;
         i++;
     }
-	pthread_create(&check_dead, NULL, &check_time, &one->last_eat);
+    i = 0;
+    while (i < one->number_of_philo)
+    {
+        pthread_create(&one->philo[i], NULL, &routine, &one->name[i]);
+        i++;
+    }
+	pthread_create(&one->check_dead, NULL, &check_time, NULL);
     pthread_mutex_lock(&one->dead);
     destroy_mutex(one);
+	ft_free(one);
 	return (1);
 }
 

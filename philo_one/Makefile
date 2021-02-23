@@ -10,7 +10,7 @@ SRCS = main.c \
 OBJS = $(SRCS:.c=.o)
 
 INCLUDE = include/philo.h
-CC = gcc -Wall -Werror -Wextra
+CC = gcc -g -Wall -Werror -Wextra -pthread 
 RM = rm -f
 
 all:		${NAME}

@@ -12,6 +12,18 @@
 
 #include "../include/philo_one.h"
 
+void    ft_free(t_data *one)
+{
+    free(one->philo);
+    free(one->mutex);
+    free(one->name);
+    free(one->last_eat);
+    one->last_eat = NULL;
+    one->name = NULL;
+    one->mutex = NULL;
+    one->philo = NULL;
+}
+
 int     check_digit(int argc, char **argv)
 {
     int i;
@@ -46,14 +58,13 @@ int     fill_struct(t_data *one, int argc, char **argv)
     if (argc == 6)
         one->number_of_time = ft_atoi(argv[5]);
     else
-	one->number_of_time = -1;
+	    one->number_of_time = 0;
 	one->philo = malloc(sizeof(pthread_t) * one->number_of_philo);
 	one->mutex = malloc(sizeof(pthread_mutex_t) * (one->number_of_philo));
 	one->name = malloc(sizeof(int) * one->number_of_philo);
-	one->last_eat = malloc(sizeof(int) * one->number_of_philo);
+	one->last_eat = malloc(sizeof(long) * one->number_of_philo);
 	memset(one->philo, 0, one->number_of_philo * 8);
 	memset(one->mutex, 0, one->number_of_philo * 8);
-	memset(one->last_eat, 0, one->number_of_philo * 8);
     return (0);
 }
 
@@ -63,7 +74,8 @@ void    init_struct(t_data *one)
     one->time_to_die = 0;
     one->time_to_eat = 0;
     one->time_to_sleep = 0;
-    one->number_of_time = 0; //facultatif
+    one->number_of_time = 0;
 	one->statut = -1;
-    one->time_start = get_time();
+    one->time_start = 0;
+    one->time_start = get_time(one);
 }

@@ -12,60 +12,92 @@
 
 #include "../include/philo_one.h"
 
-void    ft_print_str(t_data *one, long int time, int philo, char *message)
+void    ft_print_str(long int time, int philo, char *message)
 {
     char    *dest;
     char    *time_philo;
     char    *nb_philo;
+    t_data  *one;
 
+    one = *static_struct();
     time_philo = ft_itoa((int)time);
     nb_philo = ft_itoa(philo);
     dest = ft_strjoin(time_philo, " ");
-    dest = ft_strjoin_free(dest, nb_philo);
-    dest = ft_strjoin_free(dest, " ");
-    dest = ft_strjoin_free_all(dest, message);
+    dest = ft_strjoin_free(ft_strdup(dest), nb_philo);
+    dest = ft_strjoin_free_all(ft_strdup(dest), message);
     pthread_mutex_lock(&one->global);	
     write(1, dest, ft_strlen(dest));
     free(dest);
+    free(nb_philo);
+    free(time_philo);
     pthread_mutex_unlock(&one->global);
 }
 
-void    ft_print_fork(t_data *one, long int time, int philo)
+void    ft_print_fork(long int time, int philo)
 {
     char    *dest;
     char    *time_philo;
     char    *nb_philo;
     char    *msg;
+    t_data  *one;
 
-    msg = ft_strdup("has taken a fork\n");
+    one = *static_struct();
+    msg = ft_strdup(" has taken a fork\n");
     time_philo = ft_itoa((int)time);
     nb_philo = ft_itoa(philo);
     dest = ft_strjoin(time_philo, " ");
-    dest = ft_strjoin_free(dest, nb_philo);
-    dest = ft_strjoin_free(dest, " ");
-    dest = ft_strjoin_free_all(dest, msg);
+    dest = ft_strjoin_free(ft_strdup(dest), nb_philo);
+    dest = ft_strjoin_free_all(ft_strdup(dest), msg);
     pthread_mutex_lock(&one->global);	
     write(1, dest, ft_strlen(dest));
-    free(dest);
+    free(dest);    
+    free(nb_philo);
+    free(time_philo);
     pthread_mutex_unlock(&one->global);
 }
 
-void    ft_print_dead(t_data *one, long int time, int philo)
+void    ft_print_think(long int time, int philo)
 {
     char    *dest;
     char    *time_philo;
     char    *nb_philo;
     char    *msg;
+    t_data  *one;
 
-    msg = ft_strdup("died\n");
+    one = *static_struct();
+    msg = ft_strdup(" is thinking\n");
     time_philo = ft_itoa((int)time);
     nb_philo = ft_itoa(philo);
     dest = ft_strjoin(time_philo, " ");
-    dest = ft_strjoin_free(dest, nb_philo);
-    dest = ft_strjoin_free(dest, " ");
-    dest = ft_strjoin_free_all(dest, msg);
+    dest = ft_strjoin_free(ft_strdup(dest), nb_philo);
+    dest = ft_strjoin_free_all(ft_strdup(dest), msg);
     pthread_mutex_lock(&one->global);	
     write(1, dest, ft_strlen(dest));
     free(dest);
-    pthread_mutex_unlock(&one->dead);	
+    free(nb_philo);
+    free(time_philo);
+    pthread_mutex_unlock(&one->global);
+}
+
+void    ft_print_dead(long int time, int philo)
+{
+    char    *dest;
+    char    *time_philo;
+    char    *nb_philo;
+    char    *msg;
+    t_data  *one;
+
+    one = *static_struct();
+    msg = ft_strdup(" died\n");
+    time_philo = ft_itoa((int)time);
+    nb_philo = ft_itoa(philo);
+    dest = ft_strjoin(time_philo, " ");
+    dest = ft_strjoin_free(ft_strdup(dest), nb_philo);
+    dest = ft_strjoin_free_all(ft_strdup(dest), msg);
+    pthread_mutex_lock(&one->global);	
+    write(1, dest, ft_strlen(dest));
+    free(dest);
+    free(nb_philo);
+    free(time_philo);
+    pthread_mutex_unlock(&one->dead);
 }

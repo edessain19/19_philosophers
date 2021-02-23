@@ -12,17 +12,17 @@
 
 #include "../include/philo_one.h"
 
-void    ft_sleep(int time)
+void    ft_sleep(t_data *one, int time)
 {
     int i;
     long int time_now;
 
-    time_now = get_time();
+    time_now = get_time(one);
     i = 0;
     while (i < 10 * time)
     {
         i++;
-        if (get_time() - time_now >= time)
+        if (get_time(one) - time_now >= time)
             break;
         usleep(100);
     }
@@ -63,11 +63,13 @@ void    destroy_mutex(t_data *one)
         pthread_mutex_destroy(&one->mutex[i]);
         i++;
     }
+    pthread_mutex_unlock(&one->global);
     pthread_mutex_destroy(&one->global);
+    pthread_mutex_unlock(&one->dead);
     pthread_mutex_destroy(&one->dead);
 }
 
-long    get_time(void)
+long    get_time(t_data *one)
 {
     struct timeval  tp;
     long            milliseconds;
@@ -75,7 +77,7 @@ long    get_time(void)
     gettimeofday(&tp, NULL);
     milliseconds = tp.tv_sec * 1000;
     milliseconds += tp.tv_usec / 1000;
-    return (milliseconds);
+    return (milliseconds - one->time_start);
 }
 
 t_data   **static_struct(void)
