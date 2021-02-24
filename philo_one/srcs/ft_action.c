@@ -37,6 +37,18 @@ void	sleeping(t_data *one, int i)
 	}
 
 }
+int 	check_iter(t_data *one, int i)
+{
+	one->iter[i]++;
+	if (one->iter[i] == one->number_of_time)
+	{
+		one->statut = i;
+		pthread_mutex_lock(&one->global);	
+		pthread_mutex_unlock(&one->dead);
+		return (-1);
+	}
+	return (0);
+}
 
 void	*check_time(void *arg)
 {
@@ -85,6 +97,8 @@ void	*routine(void *arg)
 	one->last_eat[i] = get_time(one);
 	while (one->statut == -1)
 	{
+		if (one->number_of_time != -1 && check_iter(one, i) != 0)
+			break;
 		if (one->statut == -1)
 			ft_print_think(get_time(one), i + 1);
 		pthread_mutex_lock(&one->mutex[fork_left]);

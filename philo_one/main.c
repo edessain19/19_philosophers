@@ -15,10 +15,8 @@
 int creat_thread(t_data *one)
 {
     int         i;
-    int         *statut;
 
     i = 0;
-    statut = NULL;
     pthread_mutex_init(&one->global, NULL);
     pthread_mutex_init(&one->dead, NULL);
     pthread_mutex_lock(&one->dead);
@@ -27,6 +25,7 @@ int creat_thread(t_data *one)
         pthread_mutex_init(&one->mutex[i], NULL);
         one->name[i] = i;
         one->last_eat[i] = 0;
+        one->iter[i] = 1;
         i++;
     }
     i = 0;

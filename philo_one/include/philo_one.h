@@ -21,6 +21,7 @@ typedef struct		s_philo_one
     pthread_mutex_t	global;
     pthread_mutex_t	dead;
     int				*name;
+    int             *iter;
 	long			*last_eat;
 	int				statut;
     long int		time_start;
@@ -63,9 +64,9 @@ void                ft_free(t_data *one);
 */
 void    *routine(void *arg);
 void 	*check_time(void *arg);
+int 	check_iter(t_data *one, int i);
 void 	eating(t_data *one, int i);
 void 	sleeping(t_data *one, int i);
-void 	thinking(t_data *one, int i);
 
 /*
 ** ft_libft.c

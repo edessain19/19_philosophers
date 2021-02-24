@@ -58,10 +58,11 @@ int     fill_struct(t_data *one, int argc, char **argv)
     if (argc == 6)
         one->number_of_time = ft_atoi(argv[5]);
     else
-	    one->number_of_time = 0;
+	    one->number_of_time = -1;
 	one->philo = malloc(sizeof(pthread_t) * one->number_of_philo);
 	one->mutex = malloc(sizeof(pthread_mutex_t) * (one->number_of_philo));
 	one->name = malloc(sizeof(int) * one->number_of_philo);
+    one->iter = malloc(sizeof(int) * one->number_of_philo);
 	one->last_eat = malloc(sizeof(long) * one->number_of_philo);
 	memset(one->philo, 0, one->number_of_philo * 8);
 	memset(one->mutex, 0, one->number_of_philo * 8);
