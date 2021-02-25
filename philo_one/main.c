@@ -37,6 +37,7 @@ int creat_thread(t_data *one)
 	pthread_create(&one->check_dead, NULL, &check_time, NULL);
     pthread_mutex_lock(&one->dead);
     destroy_mutex(one);
+    write(1, "ok\n", 3);
 	return (1);
 }
 

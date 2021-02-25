@@ -20,7 +20,7 @@ void	eating(t_data *one, int i)
 	one->last_eat[i] = time;
 	if (one->statut == -1)
 	{
-		ft_print_str(get_time(one), i + 1, ft_strdup(" is eating\n"));
+		ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
 		ft_sleep(one, one->time_to_eat);
 	}
 }
@@ -32,7 +32,7 @@ void	sleeping(t_data *one, int i)
 	time = get_time(one);
 	if (one->statut == -1)
 	{
-		ft_print_str(get_time(one), i + 1, ft_strdup(" is sleeping\n"));
+		ft_print_str(time, i + 1, ft_strdup(" is sleeping\n"));
 		ft_sleep(one, one->time_to_sleep);
 	}
 
