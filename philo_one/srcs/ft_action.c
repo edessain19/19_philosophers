@@ -6,7 +6,7 @@
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 18:04:21 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/25 13:32:04 by edessain         ###   ########.fr       */
+/*   Updated: 2021/02/25 13:39:06 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void	*check_time(void *arg)
 		usleep(4000);
 	}
 	return (NULL);
+}
+
+int		ft_action_routine(t_data *one, int i, int fork_l, int fork_r);
+{
+
 }
 
 void	*routine(void *arg)
