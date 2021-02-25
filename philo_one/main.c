@@ -25,7 +25,7 @@ int creat_thread(t_data *one)
         pthread_mutex_init(&one->mutex[i], NULL);
         one->name[i] = i;
         one->last_eat[i] = 0;
-        one->iter[i] = 1;
+        one->iter[i] = 0;
         i++;
     }
     i = 0;
@@ -36,9 +36,7 @@ int creat_thread(t_data *one)
     }
 	pthread_create(&one->check_dead, NULL, &check_time, NULL);
     pthread_mutex_lock(&one->dead);
-    write(1, "1\n", 2);
     destroy_mutex(one);
-    write(1, "2\n", 2);
 	return (1);
 }
 

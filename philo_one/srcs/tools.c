@@ -60,12 +60,10 @@ void    destroy_mutex(t_data *one)
     while (i < one->number_of_philo)
     {
         pthread_mutex_destroy(&one->mutex[i]);
-        // pthread_detach(one->philo[i]);
         i++;
     }
     pthread_mutex_destroy(&one->global);
     pthread_mutex_destroy(&one->dead);
-    // pthread_detach(one->check_dead);
     ft_free(one);
 }
 

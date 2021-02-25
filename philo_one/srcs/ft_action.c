@@ -39,7 +39,6 @@ void	sleeping(t_data *one, int i)
 }
 int 	check_iter(t_data *one, int i)
 {
-	one->iter[i]++;
 	if (one->iter[i] == one->number_of_time)
 	{
 		one->statut = i;
@@ -47,6 +46,7 @@ int 	check_iter(t_data *one, int i)
 		pthread_mutex_unlock(&one->dead);
 		return (-1);
 	}
+	one->iter[i]++;
 	return (0);
 }
 

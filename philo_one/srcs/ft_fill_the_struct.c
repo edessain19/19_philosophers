@@ -18,10 +18,12 @@ void    ft_free(t_data *one)
     free(one->mutex);
     free(one->name);
     free(one->last_eat);
+    free(one->iter);
     one->last_eat = NULL;
     one->name = NULL;
     one->mutex = NULL;
     one->philo = NULL;
+    one->iter = NULL;
 }
 
 int     check_digit(int argc, char **argv)
