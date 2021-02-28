@@ -10,64 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo_one.h"
+#include "../include/philo_two.h"
 
-void	ft_sleep(t_data *one, int time)
+void	ft_sleep(t_data *two, int time)
 {
 	int			i;
 	long int	time_now;
 
-	time_now = get_time(one);
+	time_now = get_time(two);
 	i = 0;
 	while (i < 10 * time)
 	{
 		i++;
-		if (get_time(one) - time_now >= time)
+		if (get_time(two) - time_now >= time)
 			break ;
 		usleep(100);
 	}
 }
 
-void	lock_mutex(t_data *one)
-{
-	int i;
-
-	i = 0;
-	while (i < one->number_of_philo)
-	{
-		pthread_mutex_lock(&one->mutex[i]);
-		i++;
-	}
-}
-
-void	unlock_mutex(t_data *one)
+void	destroy_sem(t_data *two)
 {
 	int			i;
 
 	i = 0;
-	while (i < one->number_of_philo)
+	while (i < two->number_of_philo)
 	{
-		pthread_mutex_unlock(&one->mutex[i]);
+		sem_destroy(&two->fork[i]);
 		i++;
 	}
+	ft_free(two);
 }
 
-void	destroy_mutex(t_data *one)
-{
-	int			i;
-
-	i = 0;
-	while (i < one->number_of_philo)
-	{
-		pthread_mutex_destroy(&one->mutex[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&one->global);
-	pthread_mutex_destroy(&one->dead);
-	ft_free(one);
-}
-
-long	get_time(t_data *one)
+long	get_time(t_data *two)
 {
 	struct timeval	tp;
 	long			milliseconds;
@@ -75,12 +49,12 @@ long	get_time(t_data *one)
 	gettimeofday(&tp, NULL);
 	milliseconds = tp.tv_sec * 1000;
 	milliseconds += tp.tv_usec / 1000;
-	return (milliseconds - one->time_start);
+	return (milliseconds - two->time_start);
 }
 
 t_data	**static_struct(void)
 {
-	static t_data	*one;
+	static t_data	*two;
 
-	return (&one);
+	return (&two);
 }

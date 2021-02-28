@@ -59,6 +59,7 @@ void	*check_time(void *arg)
 	one = *static_struct();
 	nb = 0;
 	arg = 0;
+	pthread_detach(one->check_dead);
 	while (one->statut == -1)
 	{
 		while (nb < one->number_of_philo)
@@ -78,10 +79,10 @@ void	*check_time(void *arg)
 	return (NULL);
 }
 
-int		ft_action_routine(t_data *one, int i, int fork_l, int fork_r);
-{
+// int		ft_action_routine(t_data *one, int i, int fork_l, int fork_r);
+// {
 
-}
+// }
 
 void	*routine(void *arg)
 {
@@ -100,6 +101,7 @@ void	*routine(void *arg)
 		fork_right = i;
 	}
 	one->last_eat[i] = get_time(one);
+	pthread_detach(one->philo[i]);
 	while (one->statut == -1)
 	{
 		if (one->number_of_time != -1 && check_iter(one, i) != 0)

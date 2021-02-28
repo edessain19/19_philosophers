@@ -1,4 +1,4 @@
-NAME = philo_one
+NAME = philo_two
 SRCS = main.c \
 		srcs/ft_fill_the_struct.c \
 		srcs/tools.c \
@@ -9,7 +9,7 @@ SRCS = main.c \
 
 OBJS = $(SRCS:.c=.o)
 
-INCLUDE = include/philo_one.h
+INCLUDE = include/philo_two.h
 CC = gcc -g -Wall -Werror -Wextra -pthread 
 RM = rm -f
 

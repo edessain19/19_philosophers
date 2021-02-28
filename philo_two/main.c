@@ -10,49 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/philo_one.h"
+#include "./include/philo_two.h"
 
-int		creat_thread(t_data *one)
+int		creat_thread(t_data *two)
 {
 	int			i;
 
 	i = 0;
-	pthread_mutex_init(&one->global, NULL);
-	pthread_mutex_init(&one->dead, NULL);
-	pthread_mutex_lock(&one->dead);
-	while (i < one->number_of_philo)
+	 sem_unlink(&two->fork);
+	while (i < two->number_of_philo)
 	{
-		pthread_mutex_init(&one->mutex[i], NULL);
-		one->name[i] = i;
-		one->last_eat[i] = 0;
-		one->iter[i] = 0;
+		two->name[i] = i;
+		two->last_eat[i] = 0;
+		two->iter[i] = 0;
+		pthread_create(&two->philo[i], NULL, &routine, &two->name[i]);
 		i++;
 	}
-	i = 0;
-	while (i < one->number_of_philo)
+	pthread_create(&two->check_dead, NULL, &check_time, NULL);
+	while (i < two->number_of_philo)
 	{
-		pthread_create(&one->philo[i], NULL, &routine, &one->name[i]);
+		pthread_join(two->philo[i], NULL);
 		i++;
 	}
-	pthread_create(&one->check_dead, NULL, &check_time, NULL);
-	while (i < one->number_of_philo)
-	{
-		pthread_join(one->philo[i], NULL);
-		i++;
-	}
-	pthread_mutex_lock(&one->dead);
-	destroy_mutex(one);
+	destroy_sem(two);
 	return (1);
 }
 
 int		main(int argc, char **argv)
 {
-	t_data		one;
+	t_data		two;
 
-	init_struct(&one);
-	if (fill_struct(&one, argc, argv))
-		return (-1);
-	*static_struct() = &one;
-	creat_thread(&one);
+	init_struct(&two);
+	fill_struct(&two, argc, argv);
+	*static_struct() = &two;
+	creat_thread(&two);
 	return (0);
 }
