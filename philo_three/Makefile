@@ -1,0 +1,24 @@
+NAME = philo_three
+SRCS = main.c \
+		ft_fill_struct.c \
+		tools.c \
+
+
+OBJS = $(SRCS:.c=.o)
+
+INCLUDE = include/philo_three.h
+CC = gcc -g -Wall -Werror -Wextra -pthread 
+RM = rm -f
+
+all:		${NAME}
+
+$(NAME):	$(OBJS)
+			$(CC) -I./ $(OBJS) -o $@
+
+clean:
+			$(RM) $(OBJS)
+
+fclean:		clean
+			$(RM) $(NAME)
+
+re:			fclean all
