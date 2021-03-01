@@ -30,14 +30,17 @@ void	ft_sleep(t_data *two, int time)
 
 void	destroy_sem(t_data *two)
 {
-	int			i;
+    int     i;
 
-	i = 0;
-	while (i < two->number_of_philo)
-	{
-		sem_destroy(&two->fork[i]);
-		i++;
-	}
+    i = 0;
+    while (i < two->number_of_philo)
+    {
+        sem_post(two->fork);            
+        i++;
+    }
+    sem_close(two->fork);
+    sem_close(two->global);
+    sem_close(two->dead);
 	ft_free(two);
 }
 

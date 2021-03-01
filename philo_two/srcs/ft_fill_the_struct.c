@@ -15,13 +15,11 @@
 void	ft_free(t_data *two)
 {
 	free(two->philo);
-	free(two->mutex);
 	free(two->name);
 	free(two->last_eat);
 	free(two->iter);
 	two->last_eat = NULL;
 	two->name = NULL;
-	two->mutex = NULL;
 	two->philo = NULL;
 	two->iter = NULL;
 }

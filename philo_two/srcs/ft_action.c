@@ -42,6 +42,8 @@ int		check_iter(t_data *two, int i)
 	if (two->iter[i] == two->number_of_time)
 	{
 		two->statut = i;
+        sem_wait(two->global);
+		sem_post(two->dead);
 		return (-1);
 	}
 	two->iter[i]++;

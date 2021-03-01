@@ -25,8 +25,10 @@ void	ft_print_str(long int time, int philo, char *message)
 	dest = ft_strjoin_free(time_philo, " ");
 	dest = ft_strjoin_free_all(dest, nb_philo);
 	dest = ft_strjoin_free_all(dest, message);
-	write(1, dest, ft_strlen(dest));
-	free(dest);
+	sem_wait(two->global);
+    write(1, dest, ft_strlen(dest));
+	sem_post(two->global);
+    free(dest);
 }
 
 void	ft_print_fork(long int time, int philo)
@@ -44,9 +46,10 @@ void	ft_print_fork(long int time, int philo)
 	dest = ft_strjoin_free(time_philo, " ");
 	dest = ft_strjoin_free_all(dest, nb_philo);
 	dest = ft_strjoin_free_all(dest, msg);
-	write(1, dest, ft_strlen(dest));
+	sem_wait(two->global);
+    write(1, dest, ft_strlen(dest));
+    sem_post(two->global);
 	free(dest);
-	pthread_mutex_unlock(&two->global);
 }
 
 void	ft_print_think(long int time, int philo)
@@ -64,8 +67,10 @@ void	ft_print_think(long int time, int philo)
 	dest = ft_strjoin_free(time_philo, " ");
 	dest = ft_strjoin_free_all(dest, nb_philo);
 	dest = ft_strjoin_free_all(dest, msg);
-	write(1, dest, ft_strlen(dest));
-	free(dest);
+	sem_wait(two->global);
+    write(1, dest, ft_strlen(dest));
+	sem_post(two->global);
+    free(dest);
 }
 
 void	ft_print_dead(long int time, int philo)
@@ -83,6 +88,8 @@ void	ft_print_dead(long int time, int philo)
 	dest = ft_strjoin_free(time_philo, " ");
 	dest = ft_strjoin_free_all(dest, nb_philo);
 	dest = ft_strjoin_free_all(dest, msg);
-	write(1, dest, ft_strlen(dest));
+	sem_wait(two->global);
+    write(1, dest, ft_strlen(dest));
+    sem_post(two->dead);
 	free(dest);
 }
