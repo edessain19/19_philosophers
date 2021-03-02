@@ -1,7 +1,7 @@
 NAME = philo_three
 SRCS = main.c \
 		ft_fill_struct.c \
-		tools.c \
+		tools.c \gat add 
 
 
 OBJS = $(SRCS:.c=.o)
