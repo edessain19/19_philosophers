@@ -1,7 +1,11 @@
 NAME = philo_three
 SRCS = main.c \
-		ft_fill_struct.c \
-		tools.c \gat add 
+		./srcs/ft_fill_struct.c \
+		./srcs/tools.c \
+		./srcs/ft_action.c \
+		./srcs/ft_libft.c \
+		./srcs/ft_itoa.c \
+		./srcs/ft_print.c \
 
 
 OBJS = $(SRCS:.c=.o)
