@@ -65,7 +65,6 @@ int		fill_struct(t_data *two, int argc, char **argv)
 	two->last_eat = malloc(sizeof(long) * two->number_of_philo);
 	memset(two->philo, 0, two->number_of_philo * 8);
     two->nb_of_meals_max = two->number_of_philo * two->number_of_time;
-    printf("number of meal max = %i\n", two->nb_of_meals_max);
 	return (0);
 }
 
