@@ -26,6 +26,7 @@ typedef struct		s_philo_two
 	long			*last_eat;
 	int				statut;
     int             nb_of_meals;
+    int             nb_of_meals_max;
     long int		time_start;
 }					t_data;
 
@@ -53,7 +54,7 @@ void				ft_print_str(long int time,
 							int philo, char *message);
 void				ft_print_dead(long int time, int philo);
 void				ft_print_fork(long int time, int philo);
-void				ft_print_think(long int time, int philo);
+void				ft_print_eat(long int time, int philo);
 void				ft_sleep(t_data *one, int time);
 void                ft_free(t_data *one);
 

@@ -52,7 +52,7 @@ void	ft_print_fork(long int time, int philo)
 	free(dest);
 }
 
-void	ft_print_think(long int time, int philo)
+void	ft_print_eat(long int time, int philo)
 {
 	char	*dest;
 	char	*time_philo;
@@ -61,13 +61,14 @@ void	ft_print_think(long int time, int philo)
 	t_data	*two;
 
 	two = *static_struct();
-	msg = ft_strdup(" is thinking\n");
+	msg = ft_strdup(" is eating\n");
 	time_philo = ft_itoa((int)time);
 	nb_philo = ft_itoa(philo);
 	dest = ft_strjoin_free(time_philo, " ");
 	dest = ft_strjoin_free_all(dest, nb_philo);
 	dest = ft_strjoin_free_all(dest, msg);
 	sem_wait(two->global);
+    two->nb_of_meals++;
     write(1, dest, ft_strlen(dest));
 	sem_post(two->global);
     free(dest);

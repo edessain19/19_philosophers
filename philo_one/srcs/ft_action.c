@@ -71,17 +71,17 @@ void	*check_time(void *arg)
 				ft_print_dead(time, one->statut + 1);
 				return (NULL);
 			}
-        if (one->number_of_time != -1 && one->nb_of_meals >= one->nb_of_meals_max)
-	    {
-		    pthread_mutex_lock(&one->global);
-		    pthread_mutex_unlock(&one->dead);
-		    one->statut = nb;
-		    return (NULL);
-	    }
+            if (one->number_of_time != -1 && one->nb_of_meals >= one->nb_of_meals_max)
+	        {
+		        pthread_mutex_lock(&one->global);
+		        pthread_mutex_unlock(&one->dead);
+		        one->statut = nb;
+		        return (NULL);
+	        }
 			nb++;
 		}
 		nb = 0;
-		usleep(100);
+		usleep(4000);
 	}
 	return (NULL);
 }

@@ -18,10 +18,9 @@ void	eating(t_data *two, int i)
 
 	time = get_time(two);
 	two->last_eat[i] = time;
-	two->nb_of_meals--;
 	if (two->statut == -1)
 	{
-		ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
+		ft_print_eat(time, i + 1);
 		ft_sleep(two, two->time_to_eat);
 	}
 }
@@ -36,18 +35,6 @@ void	sleeping(t_data *two, int i)
 		ft_print_str(time, i + 1, ft_strdup(" is sleeping\n"));
 		ft_sleep(two, two->time_to_sleep);
 	}
-}
-
-int		check_iter(t_data *two, int i)
-{
-	if (two->nb_of_meals == 0)
-	{
-		two->statut = i;
-        sem_wait(two->global);
-		sem_post(two->dead);
-		return (-1);
-    }
-	return (0);
 }
 
 void	*check_time(void *arg)
@@ -71,6 +58,13 @@ void	*check_time(void *arg)
 				ft_print_dead(time, two->statut + 1);
 				return (NULL);
 			}
+            if (two->number_of_time != -1 && two->nb_of_meals >= two->nb_of_meals_max)
+	        {
+                sem_wait(two->global);
+		        sem_post(two->dead);
+		        two->statut = nb;
+		        return (NULL);
+	        }
 			nb++;
 		}
 		nb = 0;
@@ -90,10 +84,8 @@ void	*routine(void *arg)
 	pthread_detach(two->philo[i]);
 	while (two->statut == -1)
 	{
-		if (two->number_of_time != -1 && check_iter(two, i) != 0)
-			break ;
 		if (two->statut == -1)
-			ft_print_think(get_time(two), i + 1);
+			ft_print_str(get_time(two), i + 1, ft_strdup(" is thinking\n"));;
 		sem_wait(two->fork);
 		sem_wait(two->fork);
 		if (two->statut == -1)

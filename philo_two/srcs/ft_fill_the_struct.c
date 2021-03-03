@@ -64,7 +64,8 @@ int		fill_struct(t_data *two, int argc, char **argv)
 	two->iter = malloc(sizeof(int) * two->number_of_philo);
 	two->last_eat = malloc(sizeof(long) * two->number_of_philo);
 	memset(two->philo, 0, two->number_of_philo * 8);
-    two->nb_of_meals = two->number_of_philo * two->number_of_time;
+    two->nb_of_meals_max = two->number_of_philo * two->number_of_time;
+    printf("number of meal max = %i\n", two->nb_of_meals_max);
 	return (0);
 }
 
@@ -76,6 +77,7 @@ void	init_struct(t_data *two)
 	two->time_to_sleep = 0;
 	two->number_of_time = 0;
 	two->statut = -1;
+    two->nb_of_meals = 0;
 	two->time_start = 0;
 	two->time_start = get_time(two);
 }
