@@ -85,5 +85,6 @@ int 	*routine(t_data *three, int i)
 		sem_post(three->fork);
 		sleeping(three, i);
 	}
+    // ft_exit(three);
 	return (0);
 }

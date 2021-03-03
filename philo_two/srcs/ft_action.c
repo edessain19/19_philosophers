@@ -18,6 +18,7 @@ void	eating(t_data *two, int i)
 
 	time = get_time(two);
 	two->last_eat[i] = time;
+	two->nb_of_meals--;
 	if (two->statut == -1)
 	{
 		ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
@@ -39,14 +40,13 @@ void	sleeping(t_data *two, int i)
 
 int		check_iter(t_data *two, int i)
 {
-	if (two->iter[i] == two->number_of_time)
+	if (two->nb_of_meals == 0)
 	{
 		two->statut = i;
         sem_wait(two->global);
 		sem_post(two->dead);
 		return (-1);
-	}
-	two->iter[i]++;
+    }
 	return (0);
 }
 

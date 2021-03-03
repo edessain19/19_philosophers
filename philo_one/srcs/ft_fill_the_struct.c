@@ -73,6 +73,8 @@ int		fill_struct(t_data *one, int argc, char **argv)
 		return (-1);
 	memset(one->philo, 0, one->number_of_philo * 8);
 	memset(one->mutex, 0, one->number_of_philo * 8);
+    one->nb_of_meals = one->number_of_philo * one->number_of_time;
+    // printf("number of meals = %i\n", one->nb_of_meals);
 	return (0);
 }
 

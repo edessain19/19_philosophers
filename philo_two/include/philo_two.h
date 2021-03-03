@@ -25,6 +25,7 @@ typedef struct		s_philo_two
     int             *iter;
 	long			*last_eat;
 	int				statut;
+    int             nb_of_meals;
     long int		time_start;
 }					t_data;
 

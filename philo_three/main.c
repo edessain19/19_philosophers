@@ -22,7 +22,8 @@ int     creat_frok(t_data *three)
     int     i;
 
     i = 0;
-    
+    if (init_semaphore(three) < 0)
+        return (-1);
     while (i < three->number_of_philo)
     {
         three->pid[i] = fork();
@@ -31,6 +32,8 @@ int     creat_frok(t_data *three)
         {
             pthread_create(&three->check_dead, NULL, &check_time, NULL);
             routine(three, i);
+            
+            // kill(three->pid[i], )
         }
         i++;
     }
@@ -45,8 +48,6 @@ int     main(int argc, char **argv)
 	if (fill_struct(&three, argc, argv))
 		return (-1);
     *static_struct() = &three;
-    if (init_semaphore(&three) < 0)
-        return (-1);
     if (creat_frok(&three) < 0)
         return (-1);
     return (0);

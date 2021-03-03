@@ -18,6 +18,7 @@ void	eating(t_data *one, int i)
 
 	time = get_time(one);
 	one->last_eat[i] = time;
+    one->nb_of_meals--;
 	if (one->statut == -1)
 	{
 		ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
@@ -39,7 +40,7 @@ void	sleeping(t_data *one, int i)
 
 int		check_iter(t_data *one, int i)
 {
-	if (one->iter[i] == one->number_of_time)
+	if (one->nb_of_meals == 0)
 	{
 		one->statut = i;
 		pthread_mutex_lock(&one->global);
@@ -112,7 +113,7 @@ void	*routine(void *arg)
 		if (one->statut == -1)
 			ft_print_fork(get_time(one), i + 1);
 		pthread_mutex_lock(&one->mutex[fork_right]);
-		eating(one, i);
+        eating(one, i);
 		pthread_mutex_unlock(&one->mutex[fork_left]);
 		pthread_mutex_unlock(&one->mutex[fork_right]);
 		sleeping(one, i);

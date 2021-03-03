@@ -8,6 +8,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <signal.h>
 
 typedef struct		s_philo_three
 {
