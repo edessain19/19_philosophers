@@ -18,10 +18,9 @@ void	eating(t_data *one, int i)
 
 	time = get_time(one);
 	one->last_eat[i] = time;
-    one->nb_of_meals--;
 	if (one->statut == -1)
 	{
-		ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
+		ft_print_eat(get_time(one), i + 1);
 		ft_sleep(one, one->time_to_eat);
 	}
 }
@@ -38,18 +37,18 @@ void	sleeping(t_data *one, int i)
 	}
 }
 
-int		check_iter(t_data *one, int i)
-{
-	if (one->nb_of_meals == 0)
-	{
-		one->statut = i;
-		pthread_mutex_lock(&one->global);
-		pthread_mutex_unlock(&one->dead);
-		return (-1);
-	}
-	one->iter[i]++;
-	return (0);
-}
+// int		check_iter(t_data *one, int i)
+// {
+// 	if (one->nb_of_meals == one->number_of_philo * one->number_of_time)
+// 	{
+// 		one->statut = i;
+// 		pthread_mutex_lock(&one->global);
+// 		pthread_mutex_unlock(&one->dead);
+// 		return (1);
+// 	}
+// 	one->iter[i]++;
+// 	return (0);
+// }
 
 void	*check_time(void *arg)
 {
@@ -72,18 +71,20 @@ void	*check_time(void *arg)
 				ft_print_dead(time, one->statut + 1);
 				return (NULL);
 			}
+        if (one->number_of_time != -1 && one->nb_of_meals >= one->nb_of_meals_max)
+	    {
+		    pthread_mutex_lock(&one->global);
+		    pthread_mutex_unlock(&one->dead);
+		    one->statut = nb;
+		    return (NULL);
+	    }
 			nb++;
 		}
 		nb = 0;
-		usleep(4000);
+		usleep(100);
 	}
 	return (NULL);
 }
-
-// int		ft_action_routine(t_data *one, int i, int fork_l, int fork_r);
-// {
-
-// }
 
 void	*routine(void *arg)
 {
@@ -105,10 +106,8 @@ void	*routine(void *arg)
 	pthread_detach(one->philo[i]);
 	while (one->statut == -1)
 	{
-		if (one->number_of_time != -1 && check_iter(one, i) != 0)
-			break ;
 		if (one->statut == -1)
-			ft_print_think(get_time(one), i + 1);
+			ft_print_str(get_time(one), i + 1, ft_strdup(" is thinking\n"));
 		pthread_mutex_lock(&one->mutex[fork_left]);
 		if (one->statut == -1)
 			ft_print_fork(get_time(one), i + 1);

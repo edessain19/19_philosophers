@@ -73,8 +73,7 @@ int		fill_struct(t_data *one, int argc, char **argv)
 		return (-1);
 	memset(one->philo, 0, one->number_of_philo * 8);
 	memset(one->mutex, 0, one->number_of_philo * 8);
-    one->nb_of_meals = one->number_of_philo * one->number_of_time;
-    // printf("number of meals = %i\n", one->nb_of_meals);
+    one->nb_of_meals_max = one->number_of_philo * one->number_of_time; 
 	return (0);
 }
 
@@ -86,6 +85,7 @@ void	init_struct(t_data *one)
 	one->time_to_sleep = 0;
 	one->number_of_time = 0;
 	one->statut = -1;
+    one->nb_of_meals = 0;
 	one->time_start = 0;
 	one->time_start = get_time(one);
 }
