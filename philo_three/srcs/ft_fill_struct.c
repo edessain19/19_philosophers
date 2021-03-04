@@ -37,6 +37,7 @@ int		fill_struct(t_data *three, int argc, char **argv)
 		three->number_of_time = -1;
     if (malloc_struct(three) < 0)
         return (-1);
+    three->nb_of_meals = three->number_of_time;
 	return (0);
 }
 
@@ -47,7 +48,6 @@ void	init_struct(t_data *three)
 	three->time_to_eat = 0;
 	three->time_to_sleep = 0;
 	three->number_of_time = 0;
-    three->iter = 0;
     three->statut = -1;
 	three->time_start = 0;
 	three->time_start = get_time(three);
@@ -55,7 +55,7 @@ void	init_struct(t_data *three)
 
 int     malloc_struct(t_data *three)
 {
-    three->pid = malloc(sizeof(int) * three->number_of_philo);
+    three->pid = malloc(sizeof(pid_t) * three->number_of_philo);
     if (three->pid == NULL)
         return (-1);
     three->name = malloc(sizeof(int) * three->number_of_philo);

@@ -9,6 +9,8 @@
 # include <sys/time.h>
 # include <semaphore.h>
 # include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct		s_philo_three
 {
@@ -18,13 +20,14 @@ typedef struct		s_philo_three
     int				time_to_sleep;
     int				number_of_time;
     long int        time_start;
-    int             *pid;
+    pid_t             *pid;
     int             *name;
-    int             iter;
+    int             nb_of_meals;
     int             statut;
     int             last_eat;
     pthread_t	    check_dead;
     sem_t	        *fork;
+    sem_t           *eat;
     sem_t	        *global;
     sem_t	        *dead;
 }					t_data;
@@ -51,6 +54,7 @@ void	eating(t_data *three, int i);
 void	sleeping(t_data *three, int i);
 void	*check_time(void *arg);
 int 	*routine(t_data *three, int i);
+int     ft_exit(t_data *three);
 
 /*
 ** ft_libft.c
