@@ -83,6 +83,8 @@ int 	*routine(t_data *three, int i)
 		eating(three, i);
 		sem_post(three->fork);
 		sem_post(three->fork);
+		if (three->statut != -1)
+			exit(0);
 		sleeping(three, i);
 	}
     // ft_exit(three);

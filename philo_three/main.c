@@ -25,6 +25,11 @@ int     creat_frok(t_data *three)
     if (init_semaphore(three) < 0)
         return (-1);
     while (i < three->number_of_philo)
+	{
+    	sem_wait(three->fork);
+        i++;
+    }
+    while (i < three->number_of_philo)
     {
         three->pid[i] = fork();
         three->name[i] = i + 1;
@@ -32,9 +37,13 @@ int     creat_frok(t_data *three)
         {
             pthread_create(&three->check_dead, NULL, &check_time, NULL);
             routine(three, i);
-            
-            // kill(three->pid[i], )
         }
+        i++;
+    }
+    i = 0;
+    while (i < three->number_of_philo)
+	{
+    	sem_wait(three->fork);
         i++;
     }
     return (0);
