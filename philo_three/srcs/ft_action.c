@@ -21,8 +21,8 @@ void	eating(t_data *three, int i)
     three->nb_of_meals--;
     if (three->nb_of_meals == 0)
     {
-        three->statut = 1;
         sem_post(three->eat);
+        three->statut = 1;
     }
     ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
 	ft_sleep(three, three->time_to_eat);

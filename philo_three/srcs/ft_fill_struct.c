@@ -38,6 +38,7 @@ int		fill_struct(t_data *three, int argc, char **argv)
     if (malloc_struct(three) < 0)
         return (-1);
     three->nb_of_meals = three->number_of_time;
+    // gerer erreur nb_of_philo == 1 ou moins et nb_of_time == 0 ou moins!
 	return (0);
 }
 

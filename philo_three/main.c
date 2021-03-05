@@ -67,9 +67,11 @@ int creat_frok(t_data *three)
             sem_wait(three->eat);
             i++;
         }
-    }
-    if (three->number_of_time == -1)
+        sem_post(three->dead);
         sem_wait(three->dead);
+        return (ft_exit(three));
+    }
+    sem_wait(three->dead);
     ft_exit(three);
     return (0);
 }
