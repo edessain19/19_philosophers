@@ -18,14 +18,14 @@ void	eating(t_data *three, int i)
 
 	time = get_time(three);
 	three->last_eat = time;
-	if (i)
-	{
-        three->nb_of_meals--;
-        if (three->nb_of_meals == 0)
-            sem_post(three->eat);
-		ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
-		ft_sleep(three, three->time_to_eat);
-	}
+    three->nb_of_meals--;
+    if (three->nb_of_meals == 0)
+    {
+        three->statut = 1;
+        sem_post(three->eat);
+    }
+    ft_print_str(time, i + 1, ft_strdup(" is eating\n"));
+	ft_sleep(three, three->time_to_eat);
 }
 
 void	sleeping(t_data *three, int i)

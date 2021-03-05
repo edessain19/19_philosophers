@@ -60,13 +60,16 @@ int creat_frok(t_data *three)
         i++;
     }
     i = 0;
-    while (i < three->number_of_philo)
+    if (three->number_of_time != -1)
     {
-        sem_wait(three->eat);
-        i++;
+        while (i < three->number_of_philo)
+        {
+            sem_wait(three->eat);
+            i++;
+        }
     }
-    sem_wait(three->dead);
-    // write(1, "ok\n", 3);
+    if (three->number_of_time == -1)
+        sem_wait(three->dead);
     ft_exit(three);
     return (0);
 }
