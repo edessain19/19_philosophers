@@ -79,8 +79,10 @@ void	ft_print_dead(long int time, int philo)
 	char	*time_philo;
 	char	*nb_philo;
 	char	*msg;
+    int     i;
 	t_data	*three;
 
+    i = 0;
 	three = *static_struct();
 	msg = ft_strdup(" died\n");
 	time_philo = ft_itoa((int)time);
@@ -90,6 +92,11 @@ void	ft_print_dead(long int time, int philo)
 	dest = ft_strjoin_free_all(dest, msg);
 	sem_wait(three->global);
     write(1, dest, ft_strlen(dest));
-    sem_post(three->dead);
+    // sem_post(three->dead);
 	free(dest);
+    while (i < three->number_of_philo)
+    {
+        sem_post(three->eat);
+        i++;
+    }
 }

@@ -41,7 +41,7 @@ int creat_frok(t_data *three)
     i = 0;
     if (init_semaphore(three) < 0)
         return (-1);
-    sem_wait(three->dead);
+    // sem_wait(three->dead);
     while (i < three->number_of_philo)
     {
         sem_wait(three->eat);
@@ -60,18 +60,17 @@ int creat_frok(t_data *three)
         i++;
     }
     i = 0;
-    if (three->number_of_time != -1)
-    {
+    // if (three->number_of_time != -1)
+    // {
         while (i < three->number_of_philo)
         {
             sem_wait(three->eat);
             i++;
         }
-        sem_post(three->dead);
-        sem_wait(three->dead);
-        return (ft_exit(three));
-    }
-    sem_wait(three->dead);
+    //     sem_wait(three->dead);
+    //     return (ft_exit(three));
+    // }
+    // sem_wait(three->dead);
     ft_exit(three);
     return (0);
 }
