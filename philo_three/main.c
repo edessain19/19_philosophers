@@ -61,7 +61,8 @@ int		creat_frok(t_data *three)
 	i = 0;
 	while (i < three->number_of_philo)
 	{
-		three->pid[i] = fork();
+		if ((three->pid[i] = fork()) == -1)
+            return (0); 
 		three->name[i] = i;
 		if (three->pid[i] == 0)
 		{

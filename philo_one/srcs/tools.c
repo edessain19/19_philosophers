@@ -28,50 +28,24 @@ void	ft_sleep(t_data *one, int time)
 	}
 }
 
-void	lock_mutex(t_data *one)
-{
-	int i;
-
-	i = 0;
-	while (i < one->number_of_philo)
-	{
-		pthread_mutex_lock(&one->mutex[i]);
-		i++;
-	}
-}
-
-void	unlock_mutex(t_data *one)
-{
-	int			i;
-
-	i = 0;
-	while (i < one->number_of_philo)
-	{
-		pthread_mutex_unlock(&one->mutex[i]);
-		i++;
-	}
-}
-
 void	destroy_mutex(t_data *one)
 {
 	int			i;
 
 	i = 0;
-    (void)one;
-    while(i++ < one->number_of_philo)
-        pthread_mutex_unlock(&one->mutex[i]);
-	i = 0;
-    while(i++ < one->number_of_philo)
-        pthread_mutex_lock(&one->mutex[i]);
-	i = 0;
-    while (i < one->number_of_philo)
-	{
-		pthread_mutex_destroy(&one->mutex[i]);
+    while(i < one->number_of_philo)
+    {
+        if (pthread_mutex_unlock(&one->mutex[i]) != 0)
+            write(1, "pas ok\n", 7);
+        pthread_mutex_destroy(&one->mutex[i]);
 		i++;
-	}
+    }
+    pthread_mutex_unlock(&one->dead);
 	pthread_mutex_destroy(&one->global);
 	pthread_mutex_destroy(&one->dead);
+    write(1, "ok\n", 4);
 	ft_free(one);
+    write(1, "ok1\n", 5);
 }
 
 long	get_time(t_data *one)

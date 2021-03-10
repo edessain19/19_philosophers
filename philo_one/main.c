@@ -54,5 +54,6 @@ int		main(int argc, char **argv)
 		return (-1);
 	*static_struct() = &one;
 	creat_thread(&one);
+    write(1, "ok\n", 4);
 	return (0);
 }
