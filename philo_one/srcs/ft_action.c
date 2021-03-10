@@ -37,19 +37,6 @@ void	sleeping(t_data *one, int i)
 	}
 }
 
-// int		check_iter(t_data *one, int i)
-// {
-// 	if (one->nb_of_meals == one->number_of_philo * one->number_of_time)
-// 	{
-// 		one->statut = i;
-// 		pthread_mutex_lock(&one->global);
-// 		pthread_mutex_unlock(&one->dead);
-// 		return (1);
-// 	}
-// 	one->iter[i]++;
-// 	return (0);
-// }
-
 void	*check_time(void *arg)
 {
 	t_data			*one;

@@ -57,7 +57,13 @@ void	destroy_mutex(t_data *one)
 	int			i;
 
 	i = 0;
-	while (i < one->number_of_philo)
+    while(i++ < one->number_of_philo)
+        pthread_mutex_unlock(&one->mutex[i]);
+	i = 0;
+    while(i++ < one->number_of_philo)
+        pthread_mutex_lock(&one->mutex[i]);
+	i = 0;
+    while (i < one->number_of_philo)
 	{
 		pthread_mutex_destroy(&one->mutex[i]);
 		i++;
