@@ -11,13 +11,13 @@
 # **************************************************************************** #
 
 SRCS = main.c \
-		philo_two.c \
-		utils/ft_errors.c \
-		utils/parse.c \
-		utils/print.c \
-		utils/utils.c \
-		utils/libft.c \
-		utils/libft2.c
+		srcs/ft_routine.c \
+		srcs/ft_error.c \
+		srcs/parse.c \
+		srcs/print.c \
+		srcs/utils.c \
+		srcs/libft.c \
+		srcs/libft2.c
 		
 OBJS = $(SRCS:%.c=%.o)
 

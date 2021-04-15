@@ -18,7 +18,7 @@ void	print_str(t_data *two, int phi, char *mess)
 	char	*philo;
 	char	*str;
 
-	pthread_mutex_lock(&two->global_mutex);
+	sem_wait(two->sem_global);
 	time = ft_itoa((int)get_time(two));
 	philo = ft_itoa(phi);
 	str = ft_strjoin_free(time, " ");
@@ -26,7 +26,7 @@ void	print_str(t_data *two, int phi, char *mess)
 	str = ft_strjoin_free_all(str, mess);
 	write(1, str, ft_strlen(str));
 	free(str);
-	pthread_mutex_unlock(&two->global_mutex);
+	sem_post(two->sem_global);
 }
 
 void	print_str_eat(t_data *two, int i)
@@ -36,7 +36,7 @@ void	print_str_eat(t_data *two, int i)
 	char	*str;
 	char	*mess;
 
-	pthread_mutex_lock(&two->global_mutex);
+	sem_wait(two->sem_global);
 	time = ft_itoa((int)(get_time(two)));
 	mess = ft_strdup(" is eating\n");
 	philo = ft_itoa(i);
@@ -46,8 +46,7 @@ void	print_str_eat(t_data *two, int i)
 	write(1, str, ft_strlen(str));
 	two->count_eat[i - 1]++;
 	free(str);
-	pthread_mutex_unlock(&two->global_mutex);
-}
+	sem_post(two->sem_global);}
 
 void	print_str_dead(t_data *two, int i, long int diff)
 {
@@ -56,14 +55,14 @@ void	print_str_dead(t_data *two, int i, long int diff)
 	char	*str;
 	char	*mess;
 
+	sem_wait(two->sem_global);
 	mess = ft_strdup(" died\n");
 	philo = ft_itoa(i);
 	time = ft_itoa((int)diff);
 	str = ft_strjoin_free(time, " ");
 	str = ft_strjoin_free_all(str, philo);
 	str = ft_strjoin_free_all(str, mess);
-	pthread_mutex_lock(&two->global_mutex);
 	write(1, str, ft_strlen(str));
 	free(str);
-	pthread_mutex_unlock(&two->dead_mutex);
+	sem_post(two->sem_dead);
 }

@@ -10,7 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/philo_two.h"
+#include "../include/philo_two.h"
+
+int	thinking(t_data *two, int i)
+{
+	char		*mess;
+
+	mess = ft_strdup(" is thinking\n");
+	if (two->status == -1)
+		print_str(two, i + 1, mess);
+	return (0);
+}
+
+int	sleeping(t_data *two, int i)
+{
+	char		*mess;
+
+	mess = ft_strdup(" is sleeping\n");
+	if (two->status == -1)
+	{
+		print_str(two, i + 1, mess);
+		ft_sleep(two, two->time_to_sleep);
+	}
+	return (0);
+}
+
+int	eating(t_data *two, int i)
+{
+	if (two->status == -1)
+	{
+		print_str_eat(two, i + 1);
+		two->last_eat[i] = get_time(two);
+		ft_sleep(two, two->time_to_eat);
+	}
+	return (0);
+}
 
 void	*routine_time(void *arg)
 {
@@ -23,10 +57,10 @@ void	*routine_time(void *arg)
 		i = -1;
 		while (++i < two->nbr_of_philo)
 		{
-			if ((get_time() - two->last_eat[i]) > two->time_to_die)
+			if ((get_time(two) - two->last_eat[i]) > two->time_to_die)
 			{
 				two->status = 1;
-				print_str_dead(i + 1, (get_time() - two->t_start));
+				print_str_dead(two, i + 1, get_time(two));
 				return (0);
 			}
 		}
@@ -41,52 +75,6 @@ void	*routine_time(void *arg)
 	return (arg);
 }
 
-int	thinking(t_data *two, int i)
-{
-	long int	time;
-	char		*mess;
-
-	mess = ft_strdup(" is thinking\n");
-	time = get_time() - two->t_start;
-	if (two->status == -1)
-	{
-		print_str(time, i + 1, mess);
-	}
-	return (0);
-}
-
-int	sleeping(t_data *two, int i)
-{
-	long int	time;
-	char		*mess;
-
-	time = get_time() - two->t_start;
-	mess = ft_strdup(" is sleeping\n");
-	if (two->status == -1)
-	{
-		print_str(time, i + 1, mess);
-		my_sleep(two->time_to_sleep);
-	}
-	return (0);
-}
-
-int	eating(t_data *two, int i)
-{
-	long int	time;
-	char		*mess;
-
-	two->count_eat[i] += 1;
-	mess = ft_strdup(" is eating\n");
-	time = get_time() - two->t_start;
-	if (two->status == -1)
-	{
-		two->last_eat[i] = get_time();
-		print_str(time, i + 1, mess);
-		my_sleep(two->time_to_eat);
-	}
-	return (0);
-}
-
 void	*routine(void *arg)
 {
 	t_data		*two;
@@ -94,13 +82,13 @@ void	*routine(void *arg)
 
 	two = get_struct();
 	i = *(int *)arg;
-	two->last_eat[i] = get_time();
+	two->last_eat[i] = get_time(two);
 	while (two->status == -1)
 	{
 		thinking(two, i);
 		sem_wait(two->sem_forks);
+		print_str(two, i + 1, ft_strdup(" has taken a fork\n"));
 		sem_wait(two->sem_forks);
-		print_str_fork(i + 1);
 		eating(two, i);
 		sem_post(two->sem_forks);
 		sem_post(two->sem_forks);

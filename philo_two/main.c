@@ -67,11 +67,11 @@ int	main(int argc, char **argv)
 		return (0);
 	if (init_struct(two))
 		return (0);
-	if (parse_two(two, argc, argv))
+	if (parse_values(two, argc, argv))
 		return (0);
-	if (complete_two(two))
+	if (complete_values(two))
 		return (0);
-	two->t_start = get_time();
+	two->t_start = get_time(two);
 	philo_in_action(two);
 	free_all(two);
 	return (0);

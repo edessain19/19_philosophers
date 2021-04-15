@@ -48,7 +48,7 @@ int	complete_values(t_data *two)
 		return (1);
 	while (++i < two->nbr_of_philo)
 		two->count_eat[i] = 0;
-	return (complete_two2(two));
+	return (complete_values2(two));
 }
 
 int	parse_values(t_data *two, int argc, char **argv)
