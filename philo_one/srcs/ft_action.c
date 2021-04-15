@@ -39,14 +39,12 @@ void	sleeping(t_data *one, int i)
 
 void	*check_time(void *arg)
 {
-	t_data			*one;
 	long int		time;
 	int				nb;
+	t_data			*one;
 
 	one = *static_struct();
 	nb = 0;
-	arg = 0;
-	pthread_detach(one->check_dead);
 	while (one->statut == -1)
 	{
 		while (nb < one->number_of_philo)
@@ -58,19 +56,19 @@ void	*check_time(void *arg)
 				ft_print_dead(time, one->statut + 1);
 				return (NULL);
 			}
-            if (one->number_of_time != -1 && one->nb_of_meals >= one->nb_of_meals_max)
-	        {
-		        pthread_mutex_lock(&one->global);
-		        pthread_mutex_unlock(&one->dead);
-		        one->statut = nb;
-		        return (NULL);
-	        }
+			if (one->number_of_time != -1 && one->nb_of_meals >= one->nb_of_meals_max)
+			{
+				pthread_mutex_lock(&one->global);
+				pthread_mutex_unlock(&one->dead);
+				one->statut = nb;
+				return (NULL);
+			}
 			nb++;
 		}
 		nb = 0;
 		usleep(4000);
 	}
-	return (NULL);
+	return (arg);
 }
 
 void	*routine(void *arg)
@@ -98,11 +96,13 @@ void	*routine(void *arg)
 		pthread_mutex_lock(&one->mutex[fork_left]);
 		if (one->statut == -1)
 			ft_print_fork(get_time(one), i + 1);
-		pthread_mutex_lock(&one->mutex[fork_right]);
+        pthread_mutex_lock(&one->mutex[fork_right]);
         eating(one, i);
 		pthread_mutex_unlock(&one->mutex[fork_left]);
 		pthread_mutex_unlock(&one->mutex[fork_right]);
-		sleeping(one, i);
+        sleeping(one, i);
+        if (one->statut != -1)
+            return (NULL);
 	}
 	return (NULL);
 }

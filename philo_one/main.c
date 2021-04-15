@@ -35,11 +35,6 @@ int		creat_thread(t_data *one)
 		i++;
 	}
 	pthread_create(&one->check_dead, NULL, &check_time, NULL);
-	while (i < one->number_of_philo)
-	{
-		pthread_join(one->philo[i], NULL);
-		i++;
-	}
 	pthread_mutex_lock(&one->dead);
 	destroy_mutex(one);
 	return (1);
@@ -54,6 +49,5 @@ int		main(int argc, char **argv)
 		return (-1);
 	*static_struct() = &one;
 	creat_thread(&one);
-    write(1, "ok\n", 4);
 	return (0);
 }

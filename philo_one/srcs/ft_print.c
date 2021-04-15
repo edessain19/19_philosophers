@@ -95,6 +95,7 @@ void	ft_print_dead(long int time, int philo)
 	dest = ft_strjoin_free_all(dest, nb_philo);
 	dest = ft_strjoin_free_all(dest, msg);
 	write(1, dest, ft_strlen(dest));
-	free(dest);
 	pthread_mutex_unlock(&one->dead);
+
+	free(dest);
 }

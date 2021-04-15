@@ -14,11 +14,12 @@
 
 void	ft_free(t_data *one)
 {
+	usleep(8000);
 	free(one->philo);
-	free(one->mutex);
 	free(one->name);
 	free(one->last_eat);
 	free(one->iter);
+	free(one->mutex);
 	one->last_eat = NULL;
 	one->name = NULL;
 	one->mutex = NULL;

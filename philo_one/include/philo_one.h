@@ -59,7 +59,7 @@ void				ft_print_fork(long int time, int philo);
 void				ft_print_eat(long int time, int philo);
 void				ft_sleep(t_data *one, int time);
 void                ft_free(t_data *one);
-
+void    mutex_unlock(t_data *one);
 
 
 /*
