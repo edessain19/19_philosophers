@@ -12,17 +12,22 @@
 
 #include "../include/philo_one.h"
 
-void	eating(t_data *one, int i)
+void	eating(t_data *one, int i, int fork, int next_fork)
 {
 	long int	time;
 
+	pthread_mutex_lock(&one->mutex[fork]);
+	ft_print_fork(get_time(one), i + 1);
+	pthread_mutex_lock(&one->mutex[next_fork]);
 	time = get_time(one);
-	one->last_eat[i] = time;
 	if (one->statut == -1)
 	{
 		ft_print_eat(get_time(one), i + 1);
-		ft_sleep(one, one->time_to_eat);
+		one->last_eat[i] = time;
 	}
+	ft_sleep(one, one->time_to_eat);
+	pthread_mutex_unlock(&one->mutex[fork]);
+	pthread_mutex_unlock(&one->mutex[next_fork]);
 }
 
 void	sleeping(t_data *one, int i)
@@ -45,6 +50,7 @@ void	*check_time(void *arg)
 
 	one = *static_struct();
 	nb = 0;
+	pthread_detach(one->check_dead);
 	while (one->statut == -1)
 	{
 		while (nb < one->number_of_philo)
@@ -56,17 +62,17 @@ void	*check_time(void *arg)
 				ft_print_dead(time, one->statut + 1);
 				return (NULL);
 			}
-			if (one->number_of_time != -1 && one->nb_of_meals >= one->nb_of_meals_max)
-			{
-				pthread_mutex_lock(&one->global);
-				pthread_mutex_unlock(&one->dead);
-				one->statut = nb;
-				return (NULL);
-			}
 			nb++;
 		}
+		if (one->number_of_time != -1 && one->nb_of_meals >= one->nb_of_meals_max)
+		{
+			pthread_mutex_lock(&one->global);
+			one->statut = nb;
+			pthread_mutex_unlock(&one->dead);
+			return (NULL);
+		}
 		nb = 0;
-		usleep(4000);
+		usleep(3600);
 	}
 	return (arg);
 }
@@ -88,21 +94,13 @@ void	*routine(void *arg)
 		fork_right = i;
 	}
 	one->last_eat[i] = get_time(one);
-	pthread_detach(one->philo[i]);
+	pthread_detach(*one->philo);
 	while (one->statut == -1)
 	{
 		if (one->statut == -1)
 			ft_print_str(get_time(one), i + 1, ft_strdup(" is thinking\n"));
-		pthread_mutex_lock(&one->mutex[fork_left]);
-		if (one->statut == -1)
-			ft_print_fork(get_time(one), i + 1);
-        pthread_mutex_lock(&one->mutex[fork_right]);
-        eating(one, i);
-		pthread_mutex_unlock(&one->mutex[fork_left]);
-		pthread_mutex_unlock(&one->mutex[fork_right]);
-        sleeping(one, i);
-        if (one->statut != -1)
-            return (NULL);
+		eating(one, i, fork_left, fork_right);
+		sleeping(one, i);
 	}
 	return (NULL);
 }

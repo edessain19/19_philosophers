@@ -14,17 +14,16 @@
 
 void	ft_free(t_data *one)
 {
-	usleep(8000);
 	free(one->philo);
 	free(one->name);
 	free(one->last_eat);
 	free(one->iter);
 	free(one->mutex);
-	one->last_eat = NULL;
-	one->name = NULL;
-	one->mutex = NULL;
-	one->philo = NULL;
-	one->iter = NULL;
+	// one->last_eat = NULL;
+	// one->name = NULL;
+	// one->mutex = NULL;
+	// one->philo = NULL;
+	// one->iter = NULL;
 }
 
 int		check_digit(int argc, char **argv)

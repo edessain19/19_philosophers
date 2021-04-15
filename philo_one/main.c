@@ -12,7 +12,7 @@
 
 #include "./include/philo_one.h"
 
-int		creat_thread(t_data *one)
+void 	init_thread(t_data *one)
 {
 	int			i;
 
@@ -28,13 +28,28 @@ int		creat_thread(t_data *one)
 		one->iter[i] = 0;
 		i++;
 	}
+
+}
+
+int		creat_thread(t_data *one)
+{
+	int			i;
+
 	i = 0;
+	init_thread(one);
 	while (i < one->number_of_philo)
 	{
 		pthread_create(&one->philo[i], NULL, &routine, &one->name[i]);
 		i++;
 	}
 	pthread_create(&one->check_dead, NULL, &check_time, NULL);
+	// pthread_join(one->check_dead, NULL);
+	// i = 0;
+	// while (i < one->number_of_philo)
+	// {
+	// 	pthread_join(one->philo[i], (void *)&one->name[i]);
+	// 	i++;
+	// }
 	pthread_mutex_lock(&one->dead);
 	destroy_mutex(one);
 	return (1);
@@ -49,5 +64,6 @@ int		main(int argc, char **argv)
 		return (-1);
 	*static_struct() = &one;
 	creat_thread(&one);
+	ft_free(&one);
 	return (0);
 }

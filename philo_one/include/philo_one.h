@@ -68,7 +68,7 @@ void    mutex_unlock(t_data *one);
 void    *routine(void *arg);
 void 	*check_time(void *arg);
 int 	check_iter(t_data *one, int i);
-void 	eating(t_data *one, int i);
+void	eating(t_data *one, int i, int fork, int next_fork);
 void 	sleeping(t_data *one, int i);
 
 /*
