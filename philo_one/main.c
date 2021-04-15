@@ -1,69 +1,106 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/15 14:47:32 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/25 13:29:07 by edessain         ###   ########.fr       */
+/*   Created: 2021/02/01 17:33:37 by edessain          #+#    #+#             */
+/*   Updated: 2021/03/02 14:51:20 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "include/philo_one.h"
 
-#include "./include/philo_one.h"
-
-void 	init_thread(t_data *one)
+int	check_count_eat(void)
 {
-	int			i;
+	int		i;
+	t_data	*one;
+
+	one = get_struct();
+	i = 0;
+	while (i < one->nbr_of_philo)
+	{
+		if (one->count_eat[i] == one->nbr_of_time_each_philo_must_eat)
+			one->has_eat[i] = 1;
+		i++;
+	}
+	i = 0;
+	while (i < one->nbr_of_philo)
+	{
+		if (one->has_eat[i] == 0)
+			return (-1);
+		i++;
+	}
+	if (one->nbr_of_time_each_philo_must_eat > 0)
+		return (1);
+	return (0);
+}
+
+int	destroy_mutex(t_data *one)
+{
+	int		i;
 
 	i = 0;
-	pthread_mutex_init(&one->global, NULL);
-	pthread_mutex_init(&one->dead, NULL);
-	pthread_mutex_lock(&one->dead);
-	while (i < one->number_of_philo)
+	while (i < one->nbr_of_philo)
 	{
+		pthread_mutex_destroy(&one->mutex[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&one->global_mutex);
+	pthread_mutex_destroy(&one->dead_mutex);
+	return (0);
+}
+
+int	init_and_malloc_mutex_and_thread(t_data *one)
+{
+	int	i;
+
+	one->mutex = malloc(sizeof(pthread_mutex_t) * one->nbr_of_philo);
+	memset(one->mutex, 0, one->nbr_of_philo * 8);
+	one->thread = malloc(sizeof(pthread_t) * one->nbr_of_philo);
+	memset(one->thread, 0, one->nbr_of_philo * 8);
+	pthread_mutex_init(&one->global_mutex, NULL);
+	pthread_mutex_init(&one->dead_mutex, NULL);
+	pthread_mutex_lock(&one->dead_mutex);
+	i = -1;
+	while (++i < one->nbr_of_philo)
 		pthread_mutex_init(&one->mutex[i], NULL);
-		one->name[i] = i;
-		one->last_eat[i] = 0;
-		one->iter[i] = 0;
-		i++;
-	}
-
+	return (0);
 }
 
-int		creat_thread(t_data *one)
+int	philo_in_action(t_data *one)
 {
-	int			i;
+	int	i;
+	int	*status;
+
+	status = NULL;
+	init_and_malloc_mutex_and_thread(one);
+	i = -1;
+	while (++i < one->nbr_of_philo)
+		pthread_create(&one->thread[i], NULL, &routine, &one->iter[i]);
+	pthread_create(&one->thread_time, NULL, &routine_time, NULL);
+	pthread_mutex_lock(&one->dead_mutex);
+	destroy_mutex(one);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_data	*one;
+	int		i;
 
 	i = 0;
-	init_thread(one);
-	while (i < one->number_of_philo)
-	{
-		pthread_create(&one->philo[i], NULL, &routine, &one->name[i]);
-		i++;
-	}
-	pthread_create(&one->check_dead, NULL, &check_time, NULL);
-	// pthread_join(one->check_dead, NULL);
-	// i = 0;
-	// while (i < one->number_of_philo)
-	// {
-	// 	pthread_join(one->philo[i], (void *)&one->name[i]);
-	// 	i++;
-	// }
-	pthread_mutex_lock(&one->dead);
-	destroy_mutex(one);
-	return (1);
-}
-
-int		main(int argc, char **argv)
-{
-	t_data		one;
-
-	init_struct(&one);
-	if (fill_struct(&one, argc, argv))
-		return (-1);
-	*static_struct() = &one;
-	creat_thread(&one);
-	ft_free(&one);
+	one = get_struct();
+	if (error_arg(argc, argv))
+		return (0);
+	if (init_struct(one))
+		return (0);
+	if (parse_values(one, argc, argv))
+		return (0);
+	if (complete_values(one))
+		return (0);
+	one->t_start = get_time();
+	philo_in_action(one);
+	free_all(one);
 	return (0);
 }

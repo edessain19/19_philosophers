@@ -1,28 +1,39 @@
-NAME = philo_three
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/11/25 20:05:16 by hbuisser          #+#    #+#              #
+#    Updated: 2021/03/02 14:47:54 by hbuisser         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS = main.c \
-		./srcs/ft_fill_struct.c \
-		./srcs/tools.c \
-		./srcs/ft_action.c \
-		./srcs/ft_libft.c \
-		./srcs/ft_itoa.c \
-		./srcs/ft_print.c \
+		philo_three.c \
+		utils/errors_init_and_free.c \
+		utils/parse.c \
+		utils/print.c \
+		utils/utils.c \
+		utils/libft.c \
+		utils/libft2.c
+		
+OBJS = $(SRCS:%.c=%.o)
 
+NAME = philo_three
 
-OBJS = $(SRCS:.c=.o)
+CFLAGS = -g -Wall -Wextra -Werror -pthread 
 
-INCLUDE = include/philo_three.h
-CC = gcc -g -Wall -Werror -Wextra -pthread 
-RM = rm -f
-
-all:		${NAME}
+all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			$(CC) -I./ $(OBJS) -o $@
+			gcc $(CFLAGS) -o $(NAME) $(OBJS)
 
-clean:
-			$(RM) $(OBJS)
+clean:		
+			rm -rf $(OBJS)
 
 fclean:		clean
-			$(RM) $(NAME)
+			rm -rf $(NAME)
 
 re:			fclean all

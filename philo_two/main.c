@@ -3,67 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/15 14:47:32 by edessain          #+#    #+#             */
-/*   Updated: 2021/02/25 13:29:07 by edessain         ###   ########.fr       */
+/*   Created: 2021/02/01 17:33:37 by hbuisser          #+#    #+#             */
+/*   Updated: 2021/03/02 15:02:28 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/philo_two.h"
+#include "include/philo.h"
 
-
-int init_semaphore(t_data *two)
+int	init_thread_and_sem(t_data *values)
 {
-	sem_unlink("fork");
-    sem_unlink("global");
-    sem_unlink("dead");
-    two->dead = sem_open("dead", O_CREAT, 0660, 1);
-    if (two->dead == SEM_FAILED)
-	    return (-1);
-    two->global = sem_open("global", O_CREAT, 0660, 1);
-    if (two->global == SEM_FAILED)
-		return (-1);
-    two->fork = sem_open("fork", O_CREAT, 0660, two->number_of_philo);
-    if (two->dead == SEM_FAILED)
-		return (-1);
-    return (1); 
+	values->thread = malloc(sizeof(pthread_t) * values->nbr_of_philo);
+	memset(values->thread, 0, values->nbr_of_philo * 8);
+	sem_unlink("sem_forks");
+	sem_unlink("sem_global");
+	sem_unlink("sem_dead");
+	values->sem_dead = sem_open("sem_dead", O_CREAT, 0660, 1);
+	if (values->sem_dead == SEM_FAILED)
+		return (1);
+	values->sem_forks = sem_open("sem_forks", O_CREAT, 0660,
+			values->nbr_of_philo);
+	if (values->sem_forks == SEM_FAILED)
+		return (1);
+	values->sem_global = sem_open("sem_global", O_CREAT, 0660, 1);
+	if (values->sem_global == SEM_FAILED)
+		return (1);
+	sem_wait(values->sem_dead);
+	return (0);
 }
 
-int		creat_thread(t_data *two)
+int	philo_in_action(t_data *values)
 {
-	int			i;
+	int	i;
+	int	*status;
+
+	status = NULL;
+	if (init_thread_and_sem(values))
+		return (0);
+	i = -1;
+	while (++i < values->nbr_of_philo)
+		pthread_create(&values->thread[i], NULL, &routine, &values->iter[i]);
+	pthread_create(&values->thread_time, NULL, &routine_time, NULL);
+	sem_wait(values->sem_dead);
+	return (0);
+}
+
+t_data	*get_struct(void)
+{
+	static t_data	values;
+
+	return (&values);
+}
+
+int	main(int argc, char **argv)
+{
+	t_data	*values;
+	int		i;
 
 	i = 0;
-    if (init_semaphore(two) < 0)
-        return (-1);
-    sem_wait(two->dead);
-	while (i < two->number_of_philo)
-	{
-		two->name[i] = i;
-		two->last_eat[i] = 0;
-		two->iter[i] = 0;
-		pthread_create(&two->philo[i], NULL, &routine, &two->name[i]);
-		i++;
-	}
-	pthread_create(&two->check_dead, NULL, &check_time, NULL);
-	while (i < two->number_of_philo)
-	{
-		pthread_join(two->philo[i], NULL);
-		i++;
-	}
-    sem_wait(two->dead);
-	destroy_sem(two);
-	return (1);
-}
-
-int		main(int argc, char **argv)
-{
-	t_data		two;
-
-	init_struct(&two);
-	fill_struct(&two, argc, argv);
-	*static_struct() = &two;
-	creat_thread(&two);
+	values = get_struct();
+	if (error_arg(argc, argv))
+		return (0);
+	if (init_struct(values))
+		return (0);
+	if (parse_values(values, argc, argv))
+		return (0);
+	if (complete_values(values))
+		return (0);
+	values->t_start = get_time();
+	philo_in_action(values);
+	free_all(values);
 	return (0);
 }

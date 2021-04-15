@@ -1,27 +1,39 @@
-NAME = philo_two
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/11/25 20:05:16 by hbuisser          #+#    #+#              #
+#    Updated: 2021/03/02 14:47:59 by hbuisser         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS = main.c \
-		srcs/ft_fill_the_struct.c \
-		srcs/tools.c \
-		srcs/ft_action.c \
-		srcs/ft_libft.c \
-		srcs/ft_itoa.c \
-		srcs/ft_print.c
+		philo_two.c \
+		utils/errors_init_and_free.c \
+		utils/parse.c \
+		utils/print.c \
+		utils/utils.c \
+		utils/libft.c \
+		utils/libft2.c
+		
+OBJS = $(SRCS:%.c=%.o)
 
-OBJS = $(SRCS:.c=.o)
+NAME = philo_two
 
-INCLUDE = include/philo_two.h
-CC = gcc -g -Wall -Werror -Wextra -pthread 
-RM = rm -f
+CFLAGS = -g -Wall -Wextra -Werror -pthread 
 
-all:		${NAME}
+all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			$(CC) -I./ $(OBJS) -o $@
+			gcc $(CFLAGS) -o $(NAME) $(OBJS)
 
-clean:
-			$(RM) $(OBJS)
+clean:		
+			rm -rf $(OBJS)
 
 fclean:		clean
-			$(RM) $(NAME)
+			rm -rf $(NAME)
 
 re:			fclean all
