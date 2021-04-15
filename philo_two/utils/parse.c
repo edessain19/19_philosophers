@@ -1,73 +1,73 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 17:33:37 by hbuisser          #+#    #+#             */
-/*   Updated: 2021/02/23 10:38:22 by hbuisser         ###   ########.fr       */
+/*   Created: 2021/02/01 17:33:37 by edessain          #+#    #+#             */
+/*   Updated: 2021/03/02 15:02:28 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_two.h"
 
-int	complete_values2(t_data *values)
+int	complete_values2(t_data *two)
 {
 	int	i;
 
 	i = -1;
-	values->has_eat = (int *)malloc(sizeof(int) * values->nbr_of_philo);
-	if (!values->has_eat)
+	two->has_eat = (int *)malloc(sizeof(int) * two->nbr_of_philo);
+	if (!two->has_eat)
 		return (1);
-	while (++i < values->nbr_of_philo)
-		values->has_eat[i] = 0;
+	while (++i < two->nbr_of_philo)
+		two->has_eat[i] = 0;
 	i = -1;
-	values->last_eat = (long int *)malloc(sizeof(long int)
-			* values->nbr_of_philo);
-	if (!values->last_eat)
+	two->last_eat = (long int *)malloc(sizeof(long int)
+			* two->nbr_of_philo);
+	if (!two->last_eat)
 		return (1);
-	while (++i < values->nbr_of_philo)
-		values->last_eat[i] = 0;
+	while (++i < two->nbr_of_philo)
+		two->last_eat[i] = 0;
 	return (0);
 }
 
-int	complete_values(t_data *values)
+int	complete_values(t_data *two)
 {
 	int	i;
 
-	values->iter = (int *)malloc(sizeof(int) * values->nbr_of_philo);
-	if (!values->iter)
+	two->iter = (int *)malloc(sizeof(int) * two->nbr_of_philo);
+	if (!two->iter)
 		return (1);
 	i = -1;
-	while (++i < values->nbr_of_philo)
-		values->iter[i] = i;
+	while (++i < two->nbr_of_philo)
+		two->iter[i] = i;
 	i = -1;
-	values->count_eat = (int *)malloc(sizeof(int) * values->nbr_of_philo);
-	if (!values->count_eat)
+	two->count_eat = (int *)malloc(sizeof(int) * two->nbr_of_philo);
+	if (!two->count_eat)
 		return (1);
-	while (++i < values->nbr_of_philo)
-		values->count_eat[i] = 0;
-	return (complete_values2(values));
+	while (++i < two->nbr_of_philo)
+		two->count_eat[i] = 0;
+	return (complete_two2(two));
 }
 
-int	parse_values(t_data *values, int argc, char **argv)
+int	parse_values(t_data *two, int argc, char **argv)
 {
-	values->nbr_of_philo = ft_atoi(argv[1]);
-	values->time_to_die = ft_atoi(argv[2]);
-	values->time_to_eat = ft_atoi(argv[3]);
-	values->time_to_sleep = ft_atoi(argv[4]);
-	if (values->nbr_of_philo < 2)
+	two->nbr_of_philo = ft_atoi(argv[1]);
+	two->time_to_die = ft_atoi(argv[2]);
+	two->time_to_eat = ft_atoi(argv[3]);
+	two->time_to_sleep = ft_atoi(argv[4]);
+	if (two->nbr_of_philo < 2)
 		return (1);
-	if (values->time_to_die < 0)
+	if (two->time_to_die < 0)
 		return (1);
-	if (values->time_to_eat < 0)
+	if (two->time_to_eat < 0)
 		return (1);
-	if (values->time_to_sleep < 0)
+	if (two->time_to_sleep < 0)
 		return (1);
 	if (argc == 6)
-		values->nbr_of_time_each_philo_must_eat = ft_atoi(argv[5]);
+		two->nbr_of_time_each_philo_must_eat = ft_atoi(argv[5]);
 	else
-		values->nbr_of_time_each_philo_must_eat = 0;
+		two->nbr_of_time_each_philo_must_eat = 0;
 	return (0);
 }

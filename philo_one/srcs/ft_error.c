@@ -41,9 +41,6 @@ int	error_arg(int argc, char **argv)
 
 int	free_all(t_data *one)
 {
-	int	i;
-
-	i = 0;
 	free(one->count_eat);
 	free(one->has_eat);
 	free(one->iter);

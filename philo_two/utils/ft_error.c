@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_init_and_free.c                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 17:33:37 by hbuisser          #+#    #+#             */
-/*   Updated: 2021/02/23 19:44:55 by hbuisser         ###   ########.fr       */
+/*   Created: 2021/02/01 17:33:37 by edessain          #+#    #+#             */
+/*   Updated: 2021/03/02 15:02:28 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_two.h"
 
 int	error_arg(int argc, char **argv)
 {
@@ -39,26 +39,24 @@ int	error_arg(int argc, char **argv)
 	return (0);
 }
 
-int	init_struct(t_data *values)
+int	init_struct(t_data *two)
 {
-	values->nbr_of_philo = 0;
-	values->time_to_die = 0;
-	values->time_to_eat = 0;
-	values->time_to_sleep = 0;
-	values->nbr_of_time_each_philo_must_eat = 0;
-	values->t_start = 0;
-	values->status = -1;
+	two->nbr_of_philo = 0;
+	two->time_to_die = 0;
+	two->time_to_eat = 0;
+	two->time_to_sleep = 0;
+	two->nbr_of_time_each_philo_must_eat = 0;
+	two->t_start = 0;
+	two->status = -1;
 	return (0);
 }
 
-int	free_all(t_data *values)
+int	free_all(t_data *two)
 {
-	int	i;
-
-	i = 0;
-	free(values->count_eat);
-	free(values->has_eat);
-	free(values->iter);
-	free(values->last_eat);
+	free(two->count_eat);
+	free(two->has_eat);
+	free(two->iter);
+	free(two->last_eat);
+	free(two->thread);
 	return (0);
 }

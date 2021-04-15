@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_TWO_H
+# define PHILO_TWO_H
 
 # include <unistd.h>
 # include <string.h>
@@ -48,9 +48,9 @@ typedef struct s_data
 void			*routine(void *arg);
 void			*routine_time(void *arg);
 t_data			*get_struct(void);
-int				eating(t_data *values, int i);
-int				sleeping(t_data *values, int i);
-int				thinking(t_data *values, int i);
+int				eating(t_data *two, int i);
+int				sleeping(t_data *two, int i);
+int				thinking(t_data *two, int i);
 
 /*
 *** Utils
@@ -58,27 +58,27 @@ int				thinking(t_data *values, int i);
 
 int				check_count_eat(void);
 int				only_digit(char *str);
-int				parse_values(t_data *values, int argc, char **argv);
-int				complete_values(t_data *values);
-long			get_time(void);
-void			my_sleep(long int time);
-int				check_time(t_data *values);
+int				parse_values(t_data *two, int argc, char **argv);
+int				complete_values(t_data *two);
+long			get_time(t_data *two);
+void			ft_sleep(t_data *two, int time);
+int				check_time(t_data *two);
 
 /*
 *** Print
 */
 
-void			print_str_dead(int i, long int diff);
-void			print_str_fork(int i);
-void			print_str(long int t, int phi, char *mess);
+void			print_str_dead(t_data *two, int i, long int diff);
+void			print_str_eat(t_data *two, int i);
+void			print_str(t_data *two, int phi, char *mess);
 
 /*
 *** Errors, init and free
 */
 
 int				error_arg(int argc, char **argv);
-int				init_struct(t_data *values);
-int				free_all(t_data *values);
+int				init_struct(t_data *two);
+int				free_all(t_data *two);
 
 /*
 *** Libft

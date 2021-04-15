@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 17:33:37 by hbuisser          #+#    #+#             */
-/*   Updated: 2021/02/23 16:42:31 by hbuisser         ###   ########.fr       */
+/*   Created: 2021/02/01 17:33:37 by edessain          #+#    #+#             */
+/*   Updated: 2021/03/02 15:02:28 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_two.h"
 
-void	my_sleep(long int time)
+void	ft_sleep(t_data *two, int time)
 {
-	long int	i;
-	long int	t;
+	int			i;
+	long int	time_now;
 
+	time_now = get_time(two);
 	i = 0;
-	t = get_time();
-	while (i < (time * 20))
+	while (i < 10 * time)
 	{
 		i++;
-		if ((get_time() - t) >= time)
+		if (get_time(two) - time_now >= time)
 			break ;
-		usleep(50);
+		usleep(100);
 	}
 }
 
-long	get_time(void)
+long	get_time(t_data *two)
 {
 	struct timeval	tp;
 	long			milliseconds;
@@ -36,7 +36,7 @@ long	get_time(void)
 	gettimeofday(&tp, NULL);
 	milliseconds = tp.tv_sec * 1000;
 	milliseconds += tp.tv_usec / 1000;
-	return (milliseconds);
+	return (milliseconds - two->t_start);
 }
 
 int	only_digit(char *str)
@@ -56,24 +56,24 @@ int	only_digit(char *str)
 int	check_count_eat(void)
 {
 	int		i;
-	t_data	*values;
+	t_data	*two;
 
-	values = get_struct();
+	two = get_struct();
 	i = 0;
-	while (i < values->nbr_of_philo)
+	while (i < two->nbr_of_philo)
 	{
-		if (values->count_eat[i] == values->nbr_of_time_each_philo_must_eat)
-			values->has_eat[i] = 1;
+		if (two->count_eat[i] == two->nbr_of_time_each_philo_must_eat)
+			two->has_eat[i] = 1;
 		i++;
 	}
 	i = 0;
-	while (i < values->nbr_of_philo)
+	while (i < two->nbr_of_philo)
 	{
-		if (values->has_eat[i] == 0)
+		if (two->has_eat[i] == 0)
 			return (-1);
 		i++;
 	}
-	if (values->nbr_of_time_each_philo_must_eat > 0)
+	if (two->nbr_of_time_each_philo_must_eat > 0)
 		return (1);
 	return (0);
 }

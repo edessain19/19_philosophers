@@ -12,7 +12,7 @@
 
 SRCS = main.c \
 		philo_two.c \
-		utils/errors_init_and_free.c \
+		utils/ft_errors.c \
 		utils/parse.c \
 		utils/print.c \
 		utils/utils.c \
