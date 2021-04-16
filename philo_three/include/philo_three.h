@@ -72,9 +72,9 @@ int				check_time(t_data *three);
 *** Print
 */
 
-void		print_str_dead(t_data *three, int i, long int diff);
-void		print_str_eat(t_data *three, int i);
-void		print_str(t_data *three, int phi, char *mess);
+void			print_str_dead(t_data *three, int i, long int diff);
+void			print_str_eat(t_data *three, int i);
+void			print_str(t_data *three, int phi, char *mess);
 /*
 *** Errors, init and free
 */

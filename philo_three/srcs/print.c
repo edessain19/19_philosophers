@@ -46,7 +46,8 @@ void	print_str_eat(t_data *three, int i)
 	write(1, str, ft_strlen(str));
 	three->count_eat++;
 	free(str);
-	sem_post(three->sem_global);}
+	sem_post(three->sem_global);
+}
 
 void	print_str_dead(t_data *three, int i, long int diff)
 {

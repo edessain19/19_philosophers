@@ -30,13 +30,10 @@ int	init_sem(t_data *three)
 	return (0);
 }
 
-int	philo_in_action(t_data *three)
+int	philo_in_action(t_data *three, int i)
 {
-	int	i;
-
 	if (init_sem(three))
 		return (1);
-	i = -1;
 	while (++i < three->nbr_of_philo)
 		sem_wait(three->sem_eat);
 	i = 0;
@@ -54,6 +51,9 @@ int	philo_in_action(t_data *three)
 	i = -1;
 	while (++i < three->nbr_of_philo)
 		sem_wait(three->sem_eat);
+	i = -1;
+	while (++i < three->nbr_of_philo)
+		kill(three->pid[i], SIGKILL);
 	return (0);
 }
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 	if (complete_values(three))
 		return (0);
 	three->t_start = get_time(three);
-	if (philo_in_action(three))
+	if (philo_in_action(three, -1))
 		return (0);
 	free_all(three);
 	return (0);
