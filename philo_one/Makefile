@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
+#    By: edessain <edessain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/25 20:05:16 by hbuisser          #+#    #+#              #
-#    Updated: 2021/03/02 14:47:46 by hbuisser         ###   ########.fr        #
+#    Created: 2020/11/25 20:05:16 by edessain          #+#    #+#              #
+#    Updated: 2021/03/02 14:47:46 by edessain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
