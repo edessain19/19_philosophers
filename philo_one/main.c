@@ -99,7 +99,7 @@ int	main(int argc, char **argv)
 		return (0);
 	if (complete_values(one))
 		return (0);
-	one->t_start = get_time();
+	one->t_start = get_time(one);
 	philo_in_action(one);
 	free_all(one);
 	return (0);
