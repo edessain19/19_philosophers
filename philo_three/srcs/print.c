@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   philo_three.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 17:33:37 by hbuisser          #+#    #+#             */
-/*   Updated: 2021/02/25 18:10:14 by hbuisser         ###   ########.fr       */
+/*   Created: 2021/02/01 17:33:37 by edessain          #+#    #+#             */
+/*   Updated: 2021/02/26 11:35:53 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_three.h"
 
 void	print_str(long int t, int phi, char *mess)
 {

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 09:16:31 by mvan-eyn          #+#    #+#             */
-/*   Updated: 2021/02/26 11:18:13 by hbuisser         ###   ########.fr       */
+/*   Created: 2019/10/14 09:16:31 by edessain          #+#    #+#             */
+/*   Updated: 2021/02/26 11:18:13 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_THREE_H
+# define PHILO_THREE_H
 
 # include <unistd.h>
 # include <string.h>

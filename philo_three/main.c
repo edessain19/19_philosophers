@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edessain <edessain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/01 17:33:37 by hbuisser          #+#    #+#             */
-/*   Updated: 2021/02/26 11:40:59 by hbuisser         ###   ########.fr       */
+/*   Created: 2021/02/01 17:33:37 by edessain          #+#    #+#             */
+/*   Updated: 2021/02/26 11:40:59 by edessain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/philo.h"
+#include "include/philo_three.h"
 
 int	init_sem(t_data *values)
 {

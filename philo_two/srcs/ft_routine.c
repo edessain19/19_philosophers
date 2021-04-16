@@ -87,8 +87,8 @@ void	*routine(void *arg)
 	{
 		thinking(two, i);
 		sem_wait(two->sem_forks);
-		print_str(two, i + 1, ft_strdup(" has taken a fork\n"));
 		sem_wait(two->sem_forks);
+		print_str(two, i + 1, ft_strdup(" has taken a fork\n"));
 		eating(two, i);
 		sem_post(two->sem_forks);
 		sem_post(two->sem_forks);

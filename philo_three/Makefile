@@ -3,21 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
+#    By: edessain <edessain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/25 20:05:16 by hbuisser          #+#    #+#              #
-#    Updated: 2021/03/02 14:47:54 by hbuisser         ###   ########.fr        #
+#    Created: 2020/11/25 20:05:16 by edessain          #+#    #+#              #
+#    Updated: 2021/03/02 14:47:54 by edessain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = main.c \
-		philo_three.c \
-		utils/errors_init_and_free.c \
-		utils/parse.c \
-		utils/print.c \
-		utils/utils.c \
-		utils/libft.c \
-		utils/libft2.c
+		srcs/ft_routine.c \
+		srcs/ft_error.c \
+		srcs/parse.c \
+		srcs/print.c \
+		srcs/utils.c \
+		srcs/libft.c \
+		srcs/libft2.c
 		
 OBJS = $(SRCS:%.c=%.o)
 
