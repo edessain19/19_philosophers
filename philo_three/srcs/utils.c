@@ -26,23 +26,23 @@ int	only_digit(char *str)
 	return (1);
 }
 
-void	my_sleep(long int time)
+void	ft_sleep(t_data *three, int time)
 {
-	long int	i;
-	long int	t;
+	int			i;
+	long int	time_now;
 
+	time_now = get_time(three);
 	i = 0;
-	t = get_time();
-	while (i < (time * 20))
+	while (i < 10 * time)
 	{
 		i++;
-		if ((get_time() - t) >= time)
+		if (get_time(three) - time_now >= time)
 			break ;
-		usleep(50);
+		usleep(100);
 	}
 }
 
-long	get_time(void)
+long	get_time(t_data *three)
 {
 	struct timeval	tp;
 	long			milliseconds;
@@ -50,5 +50,5 @@ long	get_time(void)
 	gettimeofday(&tp, NULL);
 	milliseconds = tp.tv_sec * 1000;
 	milliseconds += tp.tv_usec / 1000;
-	return (milliseconds);
+	return (milliseconds - three->t_start);
 }

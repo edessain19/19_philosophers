@@ -48,13 +48,13 @@ typedef struct s_data
 *** Philo_two and main
 */
 
-void			routine(t_data *values);
+void			routine(t_data *three);
 void			*routine_time(void *arg);
 void			*routine_nbr_eat(void *arg);
 t_data			*get_struct(void);
-int				eating(t_data *values);
-int				sleeping(t_data *values);
-int				thinking(t_data *values);
+int				eating(t_data *three);
+int				sleeping(t_data *three);
+int				thinking(t_data *three);
 
 /*
 *** Utils
@@ -62,27 +62,26 @@ int				thinking(t_data *values);
 
 int				check_count_eat(void);
 int				only_digit(char *str);
-int				parse_values(t_data *values, int argc, char **argv);
-int				complete_values(t_data *values);
-long			get_time(void);
-void			my_sleep(long int time);
-int				check_time(t_data *values);
+int				parse_values(t_data *three, int argc, char **argv);
+int				complete_values(t_data *three);
+long			get_time(t_data *three);
+void			ft_sleep(t_data *three, int time);
+int				check_time(t_data *three);
 
 /*
 *** Print
 */
 
-void			print_str_dead(int i, long int diff);
-void			print_str_fork(int i);
-void			print_str(long int t, int phi, char *mess);
-
+void		print_str_dead(t_data *three, int i, long int diff);
+void		print_str_eat(t_data *three, int i);
+void		print_str(t_data *three, int phi, char *mess);
 /*
 *** Errors, init and free
 */
 
 int				error_arg(int argc, char **argv);
-int				init_struct(t_data *values);
-int				free_all(t_data *values);
+int				init_struct(t_data *three);
+int				free_all(t_data *three);
 
 /*
 *** Libft

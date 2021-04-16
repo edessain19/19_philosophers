@@ -14,86 +14,76 @@
 
 void	*routine_time(void *arg)
 {
-	t_data	*values;
+	t_data	*three;
 
-	values = get_struct();
-	while (values->status == -1)
+	three = get_struct();
+	while (three->status == -1)
 	{
-		if ((get_time() - values->last_eat) > values->time_to_die)
+		if ((get_time(three) - three->last_eat) > three->time_to_die)
 		{
-			values->status = 1;
-			print_str_dead(values->philo, (get_time() - values->t_start));
+			three->status = 1;
+			print_str_dead(three, three->philo, (get_time(three)));
 			return (0);
 		}
-		usleep(3600);
+		usleep(4000);
 	}
 	return (arg);
 }
 
-int	thinking(t_data *values)
+int	thinking(t_data *three)
 {
-	long int	time;
 	char		*mess;
 
 	mess = ft_strdup(" is thinking\n");
-	time = get_time() - values->t_start;
-	if (values->status == -1)
-		print_str(time, values->philo, mess);
+	if (three->status == -1)
+		print_str(three, three->philo, mess);
 	return (0);
 }
 
-int	sleeping(t_data *values)
+int	sleeping(t_data *three)
 {
-	long int	time;
 	char		*mess;
 
-	time = get_time() - values->t_start;
 	mess = ft_strdup(" is sleeping\n");
-	if (values->status == -1)
+	if (three->status == -1)
 	{
-		print_str(time, values->philo, mess);
-		my_sleep(values->time_to_sleep);
+		print_str(three, three->philo, mess);
+		ft_sleep(three, three->time_to_sleep);
 	}
 	return (0);
 }
 
-int	eating(t_data *values)
+int	eating(t_data *three)
 {
-	long int	time;
-	char		*mess;
-
-	values->count_eat += 1;
-	mess = ft_strdup(" is eating\n");
-	time = get_time() - values->t_start;
-	if (values->status == -1)
+	if (three->status == -1)
 	{
-		values->last_eat = get_time();
-		print_str(time, values->philo, mess);
-		if (values->nbr_of_time_each_philo_must_eat > 0
-			&& (values->count_eat >= values->nbr_of_time_each_philo_must_eat))
+		three->last_eat = get_time(three);
+		print_str_eat(three, three->philo);
+		if (three->nbr_of_time_each_philo_must_eat > 0
+			&& (three->count_eat >= three->nbr_of_time_each_philo_must_eat))
 		{
-			sem_post(values->sem_eat);
-			values->status = 1;
+			sem_post(three->sem_eat);
+			three->status = 1;
 		}
-		my_sleep(values->time_to_eat);
+		ft_sleep(three, three->time_to_eat);
 	}
 	return (1);
 }
 
-void	routine(t_data *values)
+void	routine(t_data *three)
 {
-	values->last_eat = get_time();
-	while (values->status == -1)
+	three->last_eat = get_time(three);
+	while (three->status == -1)
 	{
-		thinking(values);
-		sem_wait(values->sem_forks);
-		sem_wait(values->sem_forks);
-		print_str_fork(values->philo);
-		eating(values);
-		sem_post(values->sem_forks);
-		sem_post(values->sem_forks);
-		if (values->status == 1)
+		thinking(three);
+		sem_wait(three->sem_forks);
+		sem_wait(three->sem_forks);
+		print_str(three, three->philo, ft_strdup(" has taken a fork\n"));
+		eating(three);
+		sem_post(three->sem_forks);
+		sem_post(three->sem_forks);
+		if (three->status == 1)
 			exit(0);
-		sleeping(values);
+		sleeping(three);
 	}
 }

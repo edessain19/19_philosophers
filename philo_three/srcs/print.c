@@ -12,68 +12,62 @@
 
 #include "../include/philo_three.h"
 
-void	print_str(long int t, int phi, char *mess)
+void	print_str(t_data *three, int phi, char *mess)
 {
 	char	*time;
 	char	*philo;
 	char	*str;
-	t_data	*values;
 
-	values = get_struct();
-	time = ft_itoa((int)t);
+	sem_wait(three->sem_global);
+	time = ft_itoa((int)get_time(three));
 	philo = ft_itoa(phi);
 	str = ft_strjoin_free(time, " ");
 	str = ft_strjoin_free_all(str, philo);
 	str = ft_strjoin_free_all(str, mess);
-	sem_wait(values->sem_global);
 	write(1, str, ft_strlen(str));
 	free(str);
-	sem_post(values->sem_global);
+	sem_post(three->sem_global);
 }
 
-void	print_str_fork(int i)
+void	print_str_eat(t_data *three, int i)
 {
 	char	*philo;
 	char	*time;
 	char	*str;
 	char	*mess;
-	t_data	*values;
 
-	values = get_struct();
-	time = ft_itoa((int)(get_time() - values->t_start));
-	mess = ft_strdup(" has taken a fork\n");
+	sem_wait(three->sem_global);
+	time = ft_itoa((int)(get_time(three)));
+	mess = ft_strdup(" is eating\n");
 	philo = ft_itoa(i);
 	str = ft_strjoin_free(time, " ");
 	str = ft_strjoin_free_all(str, philo);
 	str = ft_strjoin_free_all(str, mess);
-	sem_wait(values->sem_global);
 	write(1, str, ft_strlen(str));
+	three->count_eat++;
 	free(str);
-	sem_post(values->sem_global);
-}
+	sem_post(three->sem_global);}
 
-void	print_str_dead(int i, long int diff)
+void	print_str_dead(t_data *three, int i, long int diff)
 {
 	char	*philo;
 	char	*time;
 	char	*str;
 	char	*mess;
-	t_data	*values;
 
-	values = get_struct();
+	sem_wait(three->sem_global);
 	mess = ft_strdup(" died\n");
 	philo = ft_itoa(i);
 	time = ft_itoa((int)diff);
 	str = ft_strjoin_free(time, " ");
 	str = ft_strjoin_free_all(str, philo);
 	str = ft_strjoin_free_all(str, mess);
-	sem_wait(values->sem_global);
 	write(1, str, ft_strlen(str));
 	free(str);
 	i = 0;
-	while (i < values->nbr_of_philo)
+	while (i < three->nbr_of_philo)
 	{
-		sem_post(values->sem_eat);
+		sem_post(three->sem_eat);
 		i++;
 	}
 }

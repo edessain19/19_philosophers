@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_three.h"
 
 int	error_arg(int argc, char **argv)
 {
@@ -39,23 +39,23 @@ int	error_arg(int argc, char **argv)
 	return (0);
 }
 
-int	init_struct(t_data *values)
+int	init_struct(t_data *three)
 {
-	values->nbr_of_philo = 0;
-	values->time_to_die = 0;
-	values->time_to_eat = 0;
-	values->time_to_sleep = 0;
-	values->nbr_of_time_each_philo_must_eat = 0;
-	values->t_start = 0;
-	values->status = -1;
-	values->last_eat = 0;
-	values->philo = 0;
-	values->count_eat = 0;
+	three->nbr_of_philo = 0;
+	three->time_to_die = 0;
+	three->time_to_eat = 0;
+	three->time_to_sleep = 0;
+	three->nbr_of_time_each_philo_must_eat = 0;
+	three->t_start = 0;
+	three->status = -1;
+	three->last_eat = 0;
+	three->philo = 0;
+	three->count_eat = 0;
 	return (0);
 }
 
-int	free_all(t_data *values)
+int	free_all(t_data *three)
 {
-	free(values->has_eat);
+	free(three->has_eat);
 	return (0);
 }
