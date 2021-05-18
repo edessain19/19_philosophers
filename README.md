@@ -6,6 +6,9 @@ work on the same memory space. we discover how to play with threads, mutex, sema
 To launch the project:
 
 ```git clone https://github.com/evrouche/19_philosophers.git```
+
 ```cd 19_philosophers/philo_one ```
+
 ```make```
+
 ```./philo_one 410 200 200 5```
