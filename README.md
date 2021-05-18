@@ -1,3 +1,4 @@
+<img width="533" alt="Screen Shot 2021-05-18 at 12 46 05 PM" src="https://user-images.githubusercontent.com/53702572/118638359-0e422680-b7d7-11eb-8ffd-85cf884b5e4c.png">
 # 19_philosophers
 
 Summary: In this project, we learn the basics of threading a process and how to
@@ -11,9 +12,9 @@ To launch the project:
 
 ```make```
 
-```./philo_one 410 200 200 5```
+```./philo_one 4 410 200 200```
 
-The first number represente the total amount of time a philosopher can survive without eating. The second and the third respectively, the time it takes to eat and to sleep. And the last one is the number of philosophers arourd the table.
+The first number represente the total amount of time a philosopher can survive without eating. The third and the last one respectively, the time it takes to eat and to sleep. And the last one is the number of philosophers arourd the table.
 
 For philo_one:
 
