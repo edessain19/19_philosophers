@@ -1,4 +1,4 @@
-<img width="533" alt="Screen Shot 2021-05-18 at 12 46 05 PM" src="https://user-images.githubusercontent.com/53702572/118638359-0e422680-b7d7-11eb-8ffd-85cf884b5e4c.png">
+
 # 19_philosophers
 
 Summary: In this project, we learn the basics of threading a process and how to
@@ -29,3 +29,5 @@ The philosophers sit at a circular table with a large bowl of spaghetti in the c
 at the left of each philosopher. As spaghetti is difficult to serve and eat with a single fork, it is assumed that a
 philosopher must eat with two forks, one for each hand. Each philosophers is in a different thread and to avoid philosophers duplicating forks, they have protected state with a
 mutex for each of them.
+
+<img width="533" alt="Screen Shot 2021-05-18 at 12 46 05 PM" src="https://user-images.githubusercontent.com/53702572/118638359-0e422680-b7d7-11eb-8ffd-85cf884b5e4c.png">
